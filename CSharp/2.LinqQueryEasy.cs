@@ -53,32 +53,14 @@ namespace Itenium.Interview
         int Id { get; set; }
         int Age { get; set; }
     }
-    
+
 
     public class LinqEasyQueryTests
     {
-        internal static readonly Random Rnd = new Random();
-
         [Fact]
-        public void AverageAge_WithoutChildren()
+        public void AverageAge_xxx()
         {
-            var mother1 = new Person(30);
-            var mother2 = new Person(40);
 
-            var averageAge = LinqEasyQuery.GetAverageAgeOfPersonsAndChildrenOlderThan8(new [] {mother1, mother2});
-
-            Assert.Equal(35, averageAge);
-        }
-
-        [Fact]
-        public void AverageAge_WithChildren()
-        {
-            var mother1 = new Person(30, new Child(10), new Child(10));
-            var mother2 = new Person(40, new Child(4), new Child(14));
-
-            var averageAge = LinqEasyQuery.GetAverageAgeOfPersonsAndChildrenOlderThan8(new[] { mother1, mother2 });
-
-            Assert.Equal(20.8, averageAge);
         }
     }
 }

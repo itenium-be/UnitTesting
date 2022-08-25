@@ -24,8 +24,7 @@ public class StreamsExercise {
 	 * @return account with max balance wrapped with optional
 	 */
 	public Optional<Account> findRichestPerson() {
-		return accounts.stream()
-				.max(Comparator.comparing(Account::getBalance));
+		return null;
 	}
 
 	/**
@@ -34,8 +33,7 @@ public class StreamsExercise {
 	 * @return a map where key is a Sex, and value is list of male, and female accounts
 	 */
 	public Map<Sex, List<Account>> partitionAccountsBySex() {
-		return accounts.stream()
-				.collect(Collectors.groupingBy(Account::getSex));
+		return null;
 	}
 
 	/**
@@ -44,9 +42,7 @@ public class StreamsExercise {
 	 * @return list of accounts sorted by first and last name
 	 */
 	public List<Account> sortByFirstAndLastNames() {
-		return accounts.stream()
-				.sorted(Comparator.comparing(Account::getFirstName).thenComparing(Account::getLastName))
-				.collect(Collectors.toList());
+		return null;
 	}
 
 	/**
@@ -56,9 +52,7 @@ public class StreamsExercise {
 	 * @return true if there is an account that has an email with provided domain
 	 */
 	public boolean containsAccountWithEmailDomain(String emailDomain) {
-		return accounts.stream()
-				.map(Account::getEmail)
-				.anyMatch(e -> e.split("@")[1].equals(emailDomain));
+		return false;
 	}
 
 	/**
@@ -69,9 +63,7 @@ public class StreamsExercise {
 	 * @return map of balances by its email, created in a particular year
 	 */
 	public Map<String, BigDecimal> collectBalancesByEmailForAccountsCreatedOn(int year) {
-		return accounts.stream()
-				.filter(account -> account.getCreationDate().getYear() == year)
-				.collect(Collectors.toMap(Account::getEmail, Account::getBalance));
+		return null;
 	}
 
 	/**
@@ -81,11 +73,7 @@ public class StreamsExercise {
 	 * @return a map where key is a letter and value is the amount of occurrences in all first names
 	 */
 	public Map<Character, Long> getCharacterFrequencyInFirstNames() {
-		return accounts.stream()
-				.map(Account::getFirstName)
-				.flatMapToInt(String::chars)
-				.mapToObj(c -> (char) c)
-				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		return null;
 	}
 
 }

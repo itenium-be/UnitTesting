@@ -41,57 +41,6 @@ class StreamsExerciseTest {
 	@Test
 	@Order(1)
 	void findRichestPerson() {
-		Optional<Account> expectedPerson = Optional.of(accounts.get(0));
-		Optional<Account> actualRichestPerson = streams.findRichestPerson();
 
-		assertEquals(expectedPerson, actualRichestPerson);
-	}
-
-	@Test
-	@Order(2)
-	void separateAccountsBySex() {
-		Map<Sex, List<Account>> expectedAccountMap = getExpectedMap();
-		Map<Sex, List<Account>> maleToAccountsMap = streams.partitionAccountsBySex();
-
-		assertEquals(expectedAccountMap, maleToAccountsMap);
-	}
-
-	private Map<Sex, List<Account>> getExpectedMap() {
-		Map<Sex, List<Account>> expectedMap = new HashMap<>(2);
-		expectedMap.put(Sex.MALE, Arrays.asList(accounts.get(0), accounts.get(2), accounts.get(3)));
-		expectedMap.put(Sex.FEMALE, Arrays.asList(accounts.get(1)));
-		return expectedMap;
-	}
-
-	@Test
-	@Order(3)
-	void containsAccountWithEmailDomain() {
-		assertTrue(streams.containsAccountWithEmailDomain("gmail.com"));
-		assertTrue(streams.containsAccountWithEmailDomain("yahoo.com"));
-		assertFalse(streams.containsAccountWithEmailDomain("ukr.net"));
-	}
-
-	@Test
-	@Order(4)
-	void collectBalancesByEmailForAccountsCreatedOn() {
-		Account account = accounts.get(3);
-
-		Map<String, BigDecimal> emailToBalanceMap = streams.collectBalancesByEmailForAccountsCreatedOn(account.getCreationDate().getYear());
-
-		assertEquals(Map.of(account.getEmail(), account.getBalance()), emailToBalanceMap);
-	}
-
-	@Test
-	@Order(5)
-	void getCharacterFrequencyInFirstNames() {
-		Map<Character, Long> characterFrequencyInFirstAndLastNames = streams.getCharacterFrequencyInFirstNames();
-
-		assertEquals(3, characterFrequencyInFirstAndLastNames.get('a').longValue());
-		assertEquals(1, characterFrequencyInFirstAndLastNames.get('c').longValue());
-		assertEquals(3, characterFrequencyInFirstAndLastNames.get('i').longValue());
-		assertEquals(1, characterFrequencyInFirstAndLastNames.get('J').longValue());
-		assertEquals(1, characterFrequencyInFirstAndLastNames.get('L').longValue());
-		assertEquals(2, characterFrequencyInFirstAndLastNames.get('l').longValue());
-		assertEquals(2, characterFrequencyInFirstAndLastNames.get('u').longValue());
 	}
 }

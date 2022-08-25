@@ -47,13 +47,7 @@ namespace Itenium.Interview
 
             var result = LinqQuery.Get2MostCommonCharacters(exampleString).ToArray();
 
-            Assert.Equal(2, result.Count());
-
-            Assert.Equal('d', result.First().Character);
-            Assert.Equal(6, result.First().TimesOccurring);
-
-            Assert.Equal('c', result.Last().Character);
-            Assert.Equal(4, result.Last().TimesOccurring);
+            // Assert
         }
     }
 }
