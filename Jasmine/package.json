@@ -1,0 +1,22 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1-FizzBuzz.js",
+  "dependencies": {
+    "jasmine": "3.1.0",
+    "nodemon": "1.19.1"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^3.3.13",
+    "jasmine-ts": "^0.3.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2"
+  },
+  "scripts": {
+    "test": "jasmine-ts",
+    "test:w": "nodemon -e ts --exec \"npm test\""
+  },
+  "author": "itenium",
+  "license": "MIT"
+}
