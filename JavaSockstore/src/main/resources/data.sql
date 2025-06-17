@@ -1,0 +1,2 @@
+INSERT INTO PRODUCT (ID, TITEL, OMSCHRIJVING, PRIJS, VOORRAAD) VALUES (1, 'Sok', 'Witte sok', 2.99, 100);
+-- INSERT INTO GEBRUIKER (ID, NAAM, EMAIL, WACHTWOORD, ADRES) VALUES (1, 'Jan', 'jan@email.com', 'wachtwoord', 'Straat 1');
