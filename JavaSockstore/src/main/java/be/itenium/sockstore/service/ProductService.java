@@ -2,6 +2,7 @@ package be.itenium.sockstore.service;
 
 import java.util.*;
 
+import be.itenium.sockstore.exceptions.ProductNotFoundException;
 import be.itenium.sockstore.model.Product;
 import be.itenium.sockstore.model.rest.ProductDto;
 import be.itenium.sockstore.repository.ProductRepository;
@@ -41,12 +42,8 @@ public class ProductService {
     }
 
     private Product getProduct(String id) {
-        Optional<Product> product = productRepository.findById(id);
-        if(product.isPresent()){
-            return product.get();
-        } else {
-            throw new NoSuchElementException("Product with id " + id + " not found");
-        }
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @Transactional
@@ -67,5 +64,23 @@ public class ProductService {
         }else{
             throw new RuntimeException("Product with id " + id + " has no stock left");
         }
+    }
+
+    public List<ProductDto> findByTitle(String title) {
+        return productRepository.findByTitelContainingIgnoreCase(title)
+                .stream()
+                .map(Product::toProductDto)
+                .toList();
+    }
+
+    @Transactional
+    public ProductDto applyDiscountIfLowStock(String id, Double discountPercentage, Integer stockThreshold) {
+        Product product = getProduct(id);
+        if (product.getVoorraad() < stockThreshold) {
+            Double newPrice = product.getPrijs() * (1 - discountPercentage / 100);
+            product.setPrijs(newPrice);
+            return Product.toProductDto(productRepository.save(product));
+        }
+        return Product.toProductDto(product);
     }
 }
