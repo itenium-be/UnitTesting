@@ -83,4 +83,14 @@ public class ProductService {
         }
         return Product.toProductDto(product);
     }
+
+    public Double calculateTotalInventoryValue() {
+        return productRepository.findAll().stream()
+                .mapToDouble(product -> {
+                    Double prijs = product.getPrijs();
+                    Integer voorraad = product.getVoorraad();
+                    return (prijs != null && voorraad != null) ? prijs * voorraad : 0.0;
+                })
+                .sum();
+    }
 }
