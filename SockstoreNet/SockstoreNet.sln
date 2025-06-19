@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SockstoreApi", "SockStoreApi\SockstoreApi.csproj", "{69A5C505-A3C8-474C-B40C-DB59ED8849F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SockStoreTests", "SockStoreTests\SockStoreTests.csproj", "{622A0E07-A9A6-408F-AC2A-D5500EAD2D3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{69A5C505-A3C8-474C-B40C-DB59ED8849F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69A5C505-A3C8-474C-B40C-DB59ED8849F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69A5C505-A3C8-474C-B40C-DB59ED8849F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622A0E07-A9A6-408F-AC2A-D5500EAD2D3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622A0E07-A9A6-408F-AC2A-D5500EAD2D3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622A0E07-A9A6-408F-AC2A-D5500EAD2D3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622A0E07-A9A6-408F-AC2A-D5500EAD2D3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
