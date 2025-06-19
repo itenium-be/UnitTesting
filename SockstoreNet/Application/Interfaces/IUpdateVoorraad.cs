@@ -3,6 +3,7 @@ using Vocabulary;
 
 namespace Application.Interfaces;
 
-public interface IUpdateVoorraad {
-    Product UpdateVoorraad(UpdateVoorraadCommand command);
+public interface IUpdateVoorraad
+{
+    Task<Product> UpdateVoorraad(UpdateVoorraadCommand command);
 }

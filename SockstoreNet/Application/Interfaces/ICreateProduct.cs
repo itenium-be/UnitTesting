@@ -3,6 +3,7 @@ using Vocabulary;
 
 namespace Application.Interfaces;
 
-public interface ICreateProduct {
-    Product Create(CreateProductCommand command);
+public interface ICreateProduct
+{
+    Task<Product> Create(CreateProductCommand command);
 }

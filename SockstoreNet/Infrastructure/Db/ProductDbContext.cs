@@ -5,34 +5,37 @@ using Vocabulary;
 
 namespace Infrastructure.Db;
 
-public class ProductDbContext(DbContextOptions<ProductDbContext> options) : DbContext(options){
+public class ProductDbContext(DbContextOptions<ProductDbContext> options) : DbContext(options)
+{
     public DbSet<Product> Products => Set<Product>();
 }
 
-public class ProductRepository(ProductDbContext db) : IProductPort {
-    public void Save(ProductAggregate product)
+public class ProductRepository(ProductDbContext db) : IProductPort
+{
+    public async Task Save(ProductAggregate product)
     {
         var entity = ToEntity(product);
-        db.Products.Add(entity);
-        db.SaveChanges();
+        await db.Products.AddAsync(entity);
+        await db.SaveChangesAsync();
     }
 
-    public void Update(ProductAggregate product)
+    public async Task Update(ProductAggregate product)
     {
         var entity = ToEntity(product);
         db.Products.Update(entity);
-        db.SaveChanges();
+        await db.SaveChangesAsync();
     }
 
-    public ProductAggregate? FindById(ProductId id)
+    public async Task<ProductAggregate?> FindById(ProductId id)
     {
-        var entity = db.Products.Find(id.Value);
+        var entity = await db.Products.FindAsync(id.Value);
         return entity is null ? null : ToAggregate(entity);
     }
 
-    public IEnumerable<ProductAggregate> FindAll()
+    public async Task<IEnumerable<ProductAggregate>> FindAll()
     {
-        return db.Products.Select(ToAggregate).ToList();
+        var products = await db.Products.ToListAsync();
+        return products.Select(ToAggregate);
     }
 
     private static ProductAggregate ToAggregate(Product e) =>

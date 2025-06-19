@@ -6,8 +6,9 @@ using Vocabulary;
 
 namespace Application.UseCases;
 
-public class CreateProductUseCase(IProductPort port) : ICreateProduct {
-    public Product Create(CreateProductCommand cmd) {
+public class CreateProductUseCase(IProductPort port) : ICreateProduct
+{
+    public async Task<Product> Create(CreateProductCommand cmd) {
         var product = new ProductAggregate(
             new ProductId(Guid.NewGuid().ToString()),
             cmd.Naam,
@@ -15,7 +16,7 @@ public class CreateProductUseCase(IProductPort port) : ICreateProduct {
             cmd.Prijs,
             cmd.Voorraad);
 
-        port.Save(product);
+        await port.Save(product);
         return product.ToProduct();
     }
 }

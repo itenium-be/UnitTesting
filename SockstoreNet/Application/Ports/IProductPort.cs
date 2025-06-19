@@ -4,8 +4,8 @@ using Vocabulary;
 namespace Application.Ports;
 
 public interface IProductPort {
-    void Save(ProductAggregate product);
-    ProductAggregate? FindById(ProductId id);
-    IEnumerable<ProductAggregate> FindAll();
-    void Update(ProductAggregate product);
+    Task Save(ProductAggregate product);
+    Task<ProductAggregate?> FindById(ProductId id);
+    Task<IEnumerable<ProductAggregate>> FindAll();
+    Task Update(ProductAggregate product);
 }
