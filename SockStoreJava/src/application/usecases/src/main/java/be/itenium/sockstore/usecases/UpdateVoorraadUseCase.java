@@ -20,6 +20,17 @@ public class UpdateVoorraadUseCase implements UpdateVoorraad {
         if (aggregate.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(productPort.save(aggregate.get().withVoorraad(command.nieuweVoorraad())).toProduct());
+        // BUG: We vergeten te valideren of de nieuwe voorraad negatief is!
+        // Dit zou moeten worden opgevangen door business logic
+        ProductAggregate updated = aggregate.get().withVoorraad(command.nieuweVoorraad());
+
+        // BUG: Laten we ook een subtle business logic fout introduceren
+        // Als de voorraad onder de 10 komt, zouden we een warning moeten loggen
+        // maar we doen dit verkeerd - we checken de oude voorraad ipv de nieuwe
+        if (aggregate.get().getVoorraad() < 10) {
+            System.out.println("WARNING: Lage voorraad voor product " + command.id().value());
+        }
+
+        return Optional.of(productPort.save(updated).toProduct());
     }
 }
