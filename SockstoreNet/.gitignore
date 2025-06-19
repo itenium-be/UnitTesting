@@ -1,68 +1,88 @@
-# .NET build artifacts
+# Build output
 bin/
 obj/
-out/
-
-# User-specific files
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# Visual Studio Code
-.vscode/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
 
 # Rider
 .idea/
 *.sln.iml
 
-# ASP.NET Secrets
-secrets.json
+# Visual Studio files
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
 
-# ASP.NET runtime-generated files
-wwwroot/lib/
-appsettings.*.json
+# ASP.NET
+wwwroot/dist/
+wwwroot/node_modules/
 
-# Logs
-*.log
-logs/
-*.tsbuildinfo
-
-# Test results
-TestResults/
-*.trx
-*.coverage
-*.coveragexml
-
-# NuGet packages
+# NuGet
 *.nupkg
 *.snupkg
 .nuget/
 packages/
 project.lock.json
 project.fragment.lock.json
-artifacts/
+
+# Test results
+TestResults/
+*.TestResult.xml
+*.trx
+*.coverage
+*.coveragexml
+
+# Code coverage
+coverage/
+coverage*.json
+*.lcov
+*.clover
 
 # Resharper
 _ReSharper*/
 *.DotSettings.user
 
-# Entity Framework Migrations
+# Localdb & EF
+*.db
+*.db-shm
+*.db-wal
+*.mdf
+*.ldf
 Migrations/
 
-# Other
-*.db
-*.sqlite
-*.h2.db
-
-# OS generated files
+# Mac & Linux
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+ehthumbs.db
 Thumbs.db
 
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# dotenv
+*.env
+*.env.*
+
+# User secrets
+secrets.json
+
 # Temporary files
-~$*
 *.tmp
 *.bak
-*.swp
-*.swn
-*.swo
+*.old
+*.orig
+
+# Logs
+*.log
+
+# H2 in-memory backups (if dumped for debug)
+*.mv.db
+*.trace.db
