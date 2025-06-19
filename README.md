@@ -3,7 +3,15 @@ UnitTesting
 
 Repo: https://github.com/itenium-be/UnitTesting
 
-[Blog Post on Moq & NSubstitute](https://itenium.be/blog/dotnet/nsubstitute-vs-moq/)
+
+## .NET
+
+- [Blog post on xUnit, NUnit, TUnit and MSTest](https://itenium.be/blog/dotnet/testing-frameworks/)
+- [Blog Post on Moq & NSubstitute](https://itenium.be/blog/dotnet/nsubstitute-vs-moq/)
+- [Blog post on NSubstitute](https://itenium.be/blog/dotnet/nsubstitute-tutorial/)
+- [Blog post on testing internal methods](https://itenium.be/blog/dotnet/testing-internals/)
+- [Blog post on checking Controller security](https://itenium.be/blog/dotnet/check-web-api-security/)
+
 
 ## Other Resources
 
