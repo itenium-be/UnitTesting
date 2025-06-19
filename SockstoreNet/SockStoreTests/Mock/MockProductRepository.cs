@@ -6,7 +6,7 @@ namespace SockStoreTests.Mock;
 
 public class MockProductRepository : IProductPort
 {
-    private readonly Dictionary<string, ProductAggregate> _store = new();
+    private readonly Dictionary<string, ProductAggregate> _store = [];
 
     public Task SaveAsync(ProductAggregate product)
     {

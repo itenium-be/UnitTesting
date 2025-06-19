@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using SockstoreApi.Response;
 using Vocabulary;
 
-namespace SockstoreNet.Controllers;
+namespace SockstoreApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
