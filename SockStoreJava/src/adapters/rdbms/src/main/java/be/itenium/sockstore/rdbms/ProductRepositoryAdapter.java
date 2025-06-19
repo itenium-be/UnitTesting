@@ -40,8 +40,8 @@ public class ProductRepositoryAdapter implements ProductPort {
     private ProductEntity mapToEntity(ProductAggregate aggregate) {
         ProductEntity entity = new ProductEntity();
         entity.setId(aggregate.getId().value());
-        entity.setNaam(aggregate.getNaam().value());
-        entity.setCategorie(aggregate.getCategorie().value());
+        entity.setNaam(aggregate.getCategorie().value());
+        entity.setCategorie(aggregate.getNaam().value());
 
         // BUG: Hier verliezen we precisie door BigDecimal naar double te converteren
         // Dit kan leiden tot rounding errors bij financiële berekeningen
