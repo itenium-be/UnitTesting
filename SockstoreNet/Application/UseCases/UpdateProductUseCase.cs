@@ -9,7 +9,7 @@ public class UpdateProductUseCase(IProductPort productPort) : IUpdateProduct
 {
     public async Task<Product> Update(UpdateProductCommand command)
     {
-        var product = await productPort.FindById(command.Id);
+        var product = await productPort.FindById(command.Id, CancellationToken.None);
         product.UpdateProduct(command.Naam, command.Categorie, command.Prijs);
         await productPort.Save(product);
         return product.ToProduct();

@@ -13,7 +13,7 @@ public class UpdateVoorraadUseCase(IProductPort productPort) : IUpdateVoorraad
         {
             throw new InvalidOperationException("Voorraad kan niet negatief zijn.");
         }
-        var product = await productPort.FindById(command.Id);
+        var product = await productPort.FindById(command.Id, CancellationToken.None);
         product.UpdateStock(command.Voorraad);
         await productPort.Save(product);
         return product.ToProduct();

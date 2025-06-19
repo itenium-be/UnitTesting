@@ -20,9 +20,9 @@ public class MockProductRepository : IProductPort
         return Task.CompletedTask;
     }
 
-    public Task<ProductAggregate?> FindById(ProductId id) => Task.FromResult(_store.GetValueOrDefault(id.Value));
+    public Task<ProductAggregate?> FindById(ProductId id, CancellationToken cancellationToken) => Task.FromResult(_store.GetValueOrDefault(id.Value));
 
-    public Task<IEnumerable<ProductAggregate>> FindAll() => Task.FromResult(_store.Values.AsEnumerable());
+    public Task<IEnumerable<ProductAggregate>> FindAll(CancellationToken cancellationToken) => Task.FromResult(_store.Values.AsEnumerable());
 
     public Task Update(ProductAggregate product)
     {

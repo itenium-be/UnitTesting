@@ -26,15 +26,15 @@ public class ProductRepository(ProductDbContext db) : IProductPort
         await db.SaveChangesAsync();
     }
 
-    public async Task<ProductAggregate?> FindById(ProductId id)
+    public async Task<ProductAggregate?> FindById(ProductId id, CancellationToken cancellationToken)
     {
-        var entity = await db.Products.FindAsync(id.Value);
+        var entity = await db.Products.FindAsync([id.Value], cancellationToken);
         return entity is null ? null : ToAggregate(entity);
     }
 
-    public async Task<IEnumerable<ProductAggregate>> FindAll()
+    public async Task<IEnumerable<ProductAggregate>> FindAll(CancellationToken cancellationToken)
     {
-        var products = await db.Products.ToListAsync();
+        var products = await db.Products.ToListAsync(cancellationToken: cancellationToken);
         return products.Select(ToAggregate);
     }
 

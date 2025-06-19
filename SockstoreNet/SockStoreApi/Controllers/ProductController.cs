@@ -19,17 +19,17 @@ public class ProductController(ICreateProduct createProduct, IUpdateProduct upda
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProductResponse>> GetById(string id)
+    public async Task<ActionResult<ProductResponse>> GetById(string id, CancellationToken cancellationToken)
     {
-        var product = await productQuery.FindById(new ProductId(id));
+        var product = await productQuery.FindById(new ProductId(id), cancellationToken);
         if (product is null) return NotFound();
         return Ok(ProductResponse.FromProduct(product));
     }
 
     [HttpGet]
-    public async Task<IEnumerable<ProductResponse>> GetAll()
+    public async Task<IEnumerable<ProductResponse>> GetAll(CancellationToken cancellationToken)
     {
-        var products = await productQuery.FindAll();
+        var products = await productQuery.FindAll(cancellationToken);
         return products.Select(ProductResponse.FromProduct);
     }
 
