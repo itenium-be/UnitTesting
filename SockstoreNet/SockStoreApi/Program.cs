@@ -1,4 +1,4 @@
-using SockstoreApi;
+using SockStoreApi;
 
 var builder = WebApplication.CreateBuilder(args);
 

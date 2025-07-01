@@ -13,7 +13,7 @@ public class UpdateProductUseCase(IProductPort productPort) : IUpdateProduct
         if (product == null)
             throw new ArgumentException($"Product with id {command.Id} was not found");
 
-        product.UpdateProduct(command.Naam, command.Categorie, command.Prijs);
+        product.UpdateProduct(command.Naam, command.Category, command.Price);
         await productPort.Save(product);
         return product.ToProduct();
     }

@@ -2,34 +2,34 @@ using Vocabulary;
 
 namespace Application.Domain;
 
-public class ProductAggregate(ProductId id, Naam name, Categorie category, Prijs price, Voorraad stock)
+public class ProductAggregate(ProductId id, Name name, Category category, Price price, Stock stock)
 {
-    public ProductId Id { get; private set; } = id;
-    public Naam Naam { get; private set; } = name;
-    public Categorie Categorie { get; private set; } = category;
-    public Prijs Prijs { get; private set; } = price;
-    public Voorraad Voorraad { get; private set; } = stock;
+    public ProductId Id { get; } = id;
+    public Name Name { get; private set; } = name;
+    public Category Category { get; private set; } = category;
+    public Price Price { get; private set; } = price;
+    public Stock Stock { get; private set; } = stock;
 
-    public void UpdateStock(Voorraad newStock)
+    public void UpdateStock(Stock newStock)
     {
-        Voorraad = newStock;
+        Stock = newStock;
     }
 
-    public void UpdateProduct(Naam name, Categorie category, Prijs price)
+    public void UpdateProduct(Name name, Category category, Price price)
     {
-        Naam = name;
-        Categorie = category;
-        Prijs = price;
+        Name = name;
+        Category = category;
+        Price = price;
     }
 
     public Product ToProduct()
     {
         return new Product(
             Id,
-            Naam,
-            Categorie,
-            Prijs,
-            Voorraad
+            Name,
+            Category,
+            Price,
+            Stock
         );
     }
 }

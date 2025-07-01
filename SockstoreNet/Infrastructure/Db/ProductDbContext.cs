@@ -2,6 +2,7 @@ using Application.Domain;
 using Application.Ports;
 using Microsoft.EntityFrameworkCore;
 using Vocabulary;
+using Product = Infrastructure.Entities.Product;
 
 namespace Infrastructure.Db;
 
@@ -38,15 +39,17 @@ public class ProductRepository(ProductDbContext db) : IProductPort
         return products.Select(ToAggregate);
     }
 
-    private static ProductAggregate ToAggregate(Product e) =>
-        new(new ProductId(e.Id), new Naam(e.Name), new Categorie(e.Category), new Prijs(e.Price), new Voorraad(e.Stock));
+    private static ProductAggregate ToAggregate(Product e)
+    {
+        return new(new ProductId(e.Id), new Name(e.Name), new Category(e.Category), new Price(e.Price), new Stock(e.Stock));
+    }
 
     private static Product ToEntity(ProductAggregate a) => new()
     {
         Id = a.Id.Value,
-        Name = a.Naam.Value,
-        Category = a.Categorie.Value,
-        Price = a.Prijs.Value,
-        Stock = a.Voorraad.Value
+        Name = a.Name.Value,
+        Category = a.Category.Value,
+        Price = a.Price.Value,
+        Stock = a.Stock.Value
     };
 }

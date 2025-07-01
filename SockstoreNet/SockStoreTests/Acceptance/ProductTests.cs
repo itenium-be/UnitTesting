@@ -1,11 +1,16 @@
-﻿namespace SockStoreTests;
+﻿namespace SockStoreTests.Acceptance;
 
-public class Tests {
+public class Tests
+{
     [SetUp]
-    public void Setup() { }
+    public void Setup()
+    {
+
+    }
 
     [Test]
-    public void Test1() {
+    public void Test1()
+    {
         Assert.Pass();
     }
 }

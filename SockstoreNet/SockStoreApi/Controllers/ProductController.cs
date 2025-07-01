@@ -2,14 +2,14 @@ using Application.Commands;
 using Application.Interfaces;
 using Application.Query;
 using Microsoft.AspNetCore.Mvc;
-using SockstoreApi.Response;
+using SockStoreApi.Response;
 using Vocabulary;
 
-namespace SockstoreApi.Controllers;
+namespace SockStoreApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductController(ICreateProduct createProduct, IUpdateProduct updateProduct, IUpdateVoorraad updateVoorraad, IProductQuery productQuery) : ControllerBase
+public class ProductController(ICreateProduct createProduct, IUpdateProduct updateProduct, IUpdateStock updateStock, IProductQuery productQuery) : ControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<ProductResponse>> Create(CreateProductCommand command)
@@ -18,8 +18,8 @@ public class ProductController(ICreateProduct createProduct, IUpdateProduct upda
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<ProductResponse>> GetById(string id, CancellationToken cancellationToken)
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<ProductResponse>> GetById(int id, CancellationToken cancellationToken)
     {
         var product = await productQuery.FindById(new ProductId(id), cancellationToken);
         if (product is null) return NotFound();
@@ -33,19 +33,19 @@ public class ProductController(ICreateProduct createProduct, IUpdateProduct upda
         return products.Select(ProductResponse.FromProduct);
     }
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ProductResponse>> Update(string id, UpdateProductCommand command)
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<ProductResponse>> Update(int id, UpdateProductCommand command)
     {
         if (id != command.Id.Value) return BadRequest("Id mismatch");
         var result = await updateProduct.Update(command);
         return Ok(ProductResponse.FromProduct(result));
     }
 
-    [HttpPatch("{id}/voorraad")]
-    public async Task<ActionResult<ProductResponse>> UpdateVoorraad(string id, UpdateVoorraadCommand command)
+    [HttpPatch("{id:int}/stock")]
+    public async Task<ActionResult<ProductResponse>> UpdateStock(int id, UpdateStockCommand command)
     {
         if (id != command.Id.Value) return BadRequest("Id mismatch");
-        var result = await updateVoorraad.UpdateVoorraad(command);
+        var result = await updateStock.UpdateStock(command);
         return Ok(ProductResponse.FromProduct(result));
     }
 }

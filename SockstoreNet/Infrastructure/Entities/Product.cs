@@ -1,9 +1,14 @@
-﻿namespace Infrastructure;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Product {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    public string Name { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty;
+namespace Infrastructure.Entities;
+
+public class Product
+{
+    public int Id { get; set; }
+    [StringLength(100)]
+    public string Name { get; set; } = "";
+    [StringLength(100)]
+    public string Category { get; set; } = "";
     public decimal Price { get; set; }
     public int Stock { get; set; }
 }

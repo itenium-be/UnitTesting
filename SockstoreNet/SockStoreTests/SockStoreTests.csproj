@@ -26,7 +26,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-      <ProjectReference Include="..\SockStoreApi\SockstoreApi.csproj" />
+      <ProjectReference Include="..\SockStoreApi\SockStoreApi.csproj" />
       <ProjectReference Include="..\Vocabulary\Vocabulary.csproj" />
     </ItemGroup>
 

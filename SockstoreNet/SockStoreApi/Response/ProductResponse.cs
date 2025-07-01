@@ -1,9 +1,13 @@
 using Vocabulary;
 
-namespace SockstoreApi.Response;
+namespace SockStoreApi.Response;
 
-public record ProductResponse(string Id, string Naam, string Categorie, decimal Prijs, int Voorraad) {
-    public static ProductResponse FromProduct(Product product) {
-        return new ProductResponse(product.Id.Value, product.Naam.Value, product.Categorie.Value, product.Prijs.Value, product.Voorraad.Value);
+public record ProductResponse(int Id, string Name, string Category, decimal Price, int Stock)
+{
+    public static ProductResponse FromProduct(Product product)
+    {
+        return new ProductResponse(product.Id.Value, product.Name.Value, product.Category.Value, product.Price.Value, product.Stock.Value);
     }
+
+    public override string ToString() => $"{Name} ({Category})";
 }

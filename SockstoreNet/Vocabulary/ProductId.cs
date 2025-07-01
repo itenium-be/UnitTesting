@@ -1,5 +1,8 @@
 ﻿namespace Vocabulary;
 
-public record ProductId(string Value) {
-    public string Value { get; } = Value ?? throw new ArgumentException("ProductId mag niet leeg zijn.", nameof(Value));
+public record ProductId(int Value = 0)
+{
+    public int Value { get; } = Value;
+
+    public override string ToString() => Value.ToString();
 }

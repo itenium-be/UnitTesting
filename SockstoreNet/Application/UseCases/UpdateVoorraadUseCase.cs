@@ -5,19 +5,19 @@ using Vocabulary;
 
 namespace Application.UseCases;
 
-public class UpdateVoorraadUseCase(IProductPort productPort) : IUpdateVoorraad
+public class UpdateStockUseCase(IProductPort productPort) : IUpdateStock
 {
-    public async Task<Product> UpdateVoorraad(UpdateVoorraadCommand command)
+    public async Task<Product> UpdateStock(UpdateStockCommand command)
     {
-        if (command.Voorraad.Value < 0)
+        if (command.Stock.Value < 0)
         {
-            throw new InvalidOperationException("Voorraad kan niet negatief zijn.");
+            throw new InvalidOperationException("Stock cannot be negative.");
         }
         var product = await productPort.FindById(command.Id, CancellationToken.None);
         if (product == null)
             throw new ArgumentException($"Product with id {command.Id} was not found");
 
-        product.UpdateStock(command.Voorraad);
+        product.UpdateStock(command.Stock);
         await productPort.Save(product);
         return product.ToProduct();
     }
