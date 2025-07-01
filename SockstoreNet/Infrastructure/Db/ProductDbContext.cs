@@ -1,14 +1,14 @@
 using Application.Domain;
 using Application.Ports;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 using Vocabulary;
-using Product = Infrastructure.Entities.Product;
 
 namespace Infrastructure.Db;
 
 public class ProductDbContext(DbContextOptions<ProductDbContext> options) : DbContext(options)
 {
-    public DbSet<Product> Products => Set<Product>();
+    public DbSet<ProductEntity> Products => Set<ProductEntity>();
 }
 
 public class ProductRepository(ProductDbContext db) : IProductPort
@@ -39,12 +39,12 @@ public class ProductRepository(ProductDbContext db) : IProductPort
         return products.Select(ToAggregate);
     }
 
-    private static ProductAggregate ToAggregate(Product e)
+    private static ProductAggregate ToAggregate(ProductEntity e)
     {
         return new(new ProductId(e.Id), new Name(e.Name), new Category(e.Category), new Price(e.Price), new Stock(e.Stock));
     }
 
-    private static Product ToEntity(ProductAggregate a) => new()
+    private static ProductEntity ToEntity(ProductAggregate a) => new()
     {
         Id = a.Id.Value,
         Name = a.Name.Value,

@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Entities;
 
-public class Product
+public class ProductEntity
 {
     public int Id { get; set; }
     [StringLength(100)]
@@ -11,4 +11,6 @@ public class Product
     public string Category { get; set; } = "";
     public decimal Price { get; set; }
     public int Stock { get; set; }
+
+    public override string ToString() => $"{Name} ({Category})";
 }
