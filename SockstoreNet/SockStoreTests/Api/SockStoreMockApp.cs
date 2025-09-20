@@ -8,7 +8,7 @@ using SockStoreTests.Mock;
 
 namespace SockStoreTests.Api;
 
-public class SockStoreMockApp: WebApplicationFactory<Program>
+public class SockStoreMockApp : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {

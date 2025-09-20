@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICreateProduct, CreateProductUseCase>();
         services.AddScoped<IUpdateProduct, UpdateProductUseCase>();
         services.AddScoped<IUpdateStock, UpdateStockUseCase>();
+        services.AddScoped<CreateProductListingUseCase>();
         services.AddScoped<IProductQuery, ProductQuery>();
         return services;
     }
@@ -26,6 +27,18 @@ public static class ServiceCollectionExtensions
             options.UseInMemoryDatabase("SockStore"));
 
         services.AddScoped<IProductPort, ProductRepository>();
+        return services;
+    }
+
+    public static IServiceCollection AddSwagger(this IServiceCollection services)
+    {
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(options =>
+        {
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SockstoreApi.xml"));
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Application.xml"));
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Vocabulary.xml"));
+        });
         return services;
     }
 }

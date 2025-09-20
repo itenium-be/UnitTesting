@@ -8,6 +8,14 @@ public class MockProductRepository : IProductPort
 {
     private readonly Dictionary<int, ProductAggregate> _store = [];
 
+    public MockProductRepository(IEnumerable<ProductAggregate> products)
+    {
+        foreach (var product in products)
+        {
+            _store.Add(product.Id.Value, product);
+        }
+    }
+
     public Task SaveAsync(ProductAggregate product)
     {
         _store[product.Id.Value] = product;

@@ -3,7 +3,8 @@ using Vocabulary;
 
 namespace Application.Ports;
 
-public interface IProductPort {
+public interface IProductPort
+{
     Task Save(ProductAggregate product);
     Task<ProductAggregate?> FindById(ProductId id, CancellationToken cancellationToken);
     Task<IEnumerable<ProductAggregate>> FindAll(CancellationToken cancellationToken);
