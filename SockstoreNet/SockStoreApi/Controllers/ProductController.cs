@@ -15,7 +15,7 @@ public class ProductController(ICreateProduct createProduct, IUpdateProduct upda
     public async Task<ActionResult<ProductResponse>> Create(CreateProductCommand command)
     {
         var result = await createProduct.Create(command);
-        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        return CreatedAtAction(nameof(Create), new { id = result.Id }, result);
     }
 
     [HttpGet("{id:int}")]
