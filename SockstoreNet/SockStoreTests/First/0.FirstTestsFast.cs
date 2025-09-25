@@ -1,6 +1,7 @@
 ﻿using Migration;
+using Vocabulary;
 
-namespace SockStoreTests.Acceptance;
+namespace SockStoreTests.First;
 
 /// <summary>
 /// FIRST: Fast
@@ -16,9 +17,7 @@ public class FirstTestsFast
     {
         var migrator = new Migrator(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data"));
         var result = migrator.Migrate();
-
-        bool inactiveVueSocksExist = result.Any(x => x.Name.Value == "Vue.js Reactive Comfort");
-        Assert.That(inactiveVueSocksExist, Is.False);
+        Assert.That(result, Is.All.Matches<Product>(x => x.Name.Value != "Vue.js Reactive Comfort"));
     }
 
     [Test]
@@ -26,9 +25,7 @@ public class FirstTestsFast
     {
         var migrator = new Migrator(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data"));
         var result = migrator.Migrate();
-
-        var namesWithSocks = result.Where(x => x.Name.Value.EndsWith(" Socks")).ToArray();
-        Assert.That(namesWithSocks.Length, Is.EqualTo(0));
+        Assert.That(result, Has.None.Matches<Product>(x => x.Name.Value.EndsWith(" Socks")));
     }
 
     [Test]
@@ -37,12 +34,7 @@ public class FirstTestsFast
         // TODO: We'll have to add the "Sizes" to our Socks in the new system at some point
         var migrator = new Migrator(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data"));
         var result = migrator.Migrate();
-
-        var duplicatedNames = result
-            .GroupBy(x => x.Name.Value)
-            .Where(x => x.Count() > 1)
-            .ToArray();
-        Assert.That(duplicatedNames.Length, Is.EqualTo(0));
+        Assert.That(result.Select(x => x.Name.Value), Is.Unique);
     }
 
     [Test]
@@ -53,5 +45,28 @@ public class FirstTestsFast
 
         var cssGrid = result.Single(x => x.Name.Value == "CSS Grid Layout");
         Assert.That(cssGrid.Stock.Value, Is.EqualTo(1141));
+    }
+
+    [Test]
+    public void Category_IsHardCodedDummyValue()
+    {
+        // For now...
+        var migrator = new Migrator(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data"));
+        var result = migrator.Migrate();
+        Assert.That(result, Is.All.Matches<Product>(x => x.Category.Value == "???"));
+    }
+
+    /// <summary>
+    /// ATTN: While this test is running correctly on the CI, we've had reports that
+    /// the test fails on some developer machines!?
+    /// </summary>
+    [Test]
+    public void Price_IsImportedCorrectly()
+    {
+        var migrator = new Migrator(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data"));
+        var result = migrator.Migrate();
+
+        var reactHooks = result.Single(x => x.Name.Value == "React Hooks Premium");
+        Assert.That(reactHooks.Price.Value, Is.EqualTo(16.66m));
     }
 }

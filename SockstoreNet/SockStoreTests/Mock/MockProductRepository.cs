@@ -37,4 +37,9 @@ public class MockProductRepository : IProductPort
         _store[product.Id.Value] = product;
         return Task.CompletedTask;
     }
+
+    public Task<decimal> GetGlobalDiscount()
+    {
+        return Task.FromResult(0m);
+    }
 }

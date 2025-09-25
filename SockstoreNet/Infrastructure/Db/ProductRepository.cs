@@ -22,25 +22,39 @@ public class ProductRepository(ProductDbContext db) : IProductPort
         await db.SaveChangesAsync();
     }
 
+    public async Task<decimal> GetGlobalDiscount()
+    {
+        var discount = await db.Parameters.FirstOrDefaultAsync(x => x.Key == "GlobalDiscount");
+        if (discount == null)
+            return 0;
+
+        if (decimal.TryParse(discount.Value, out decimal result))
+            return result;
+
+        return 0;
+    }
+
     public async Task<ProductAggregate?> FindById(ProductId id, CancellationToken cancellationToken)
     {
         var entity = await db.Products.FindAsync([id.Value], cancellationToken);
-        return entity is null ? null : ToAggregate(entity);
+        return entity is null ? null : await ToAggregate(entity);
     }
 
     public async Task<IEnumerable<ProductAggregate>> FindAll(CancellationToken cancellationToken)
     {
         var products = await db.Products.ToListAsync(cancellationToken: cancellationToken);
-        return products.Select(ToAggregate);
+        var result = products.Select(async prod => await ToAggregate(prod));
+        return await Task.WhenAll(result);
     }
 
-    private static ProductAggregate ToAggregate(ProductEntity e)
+    private async Task<ProductAggregate> ToAggregate(ProductEntity e)
     {
+        decimal globalDiscount = await GetGlobalDiscount();
         return new(
             new ProductId(e.Id),
             new Name(e.Name),
             new Category(e.Category),
-            new Price(e.Price),
+            new Price(e.Price, globalDiscount),
             new Stock(e.Stock)
         );
     }

@@ -6,7 +6,7 @@ public class Price
 
     public decimal Value { get; }
 
-    public Price(decimal value)
+    public Price(decimal value, decimal globalDiscount = 0)
     {
         if (value < 0)
         {
@@ -21,6 +21,13 @@ public class Price
         {
             Value = value;
         }
+
+        if (globalDiscount != 0)
+        {
+            Value -= globalDiscount;
+        }
+
+        Value = Math.Round(Value, 2);
     }
 
     public override string ToString() => $"{Value:0.00} EUR";

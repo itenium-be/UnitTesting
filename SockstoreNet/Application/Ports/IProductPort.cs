@@ -9,4 +9,5 @@ public interface IProductPort
     Task<ProductAggregate?> FindById(ProductId id, CancellationToken cancellationToken);
     Task<IEnumerable<ProductAggregate>> FindAll(CancellationToken cancellationToken);
     Task Update(ProductAggregate product);
+    Task<decimal> GetGlobalDiscount();
 }

@@ -11,6 +11,7 @@ namespace Migration
     public class Migrator
     {
         private readonly string _dataDirectory;
+        private readonly ICollection<StockItem> _stock = new List<StockItem>();
 
         public Migrator(string dataDirectory)
         {
@@ -20,15 +21,11 @@ namespace Migration
         public IEnumerable<Product> Migrate()
         {
             string catalogPath = Path.Combine(_dataDirectory, "socks_catalog.csv");
-            string stockPath = Path.Combine(_dataDirectory, "stock_inventory.xlsx");
-
             if (!File.Exists(catalogPath))
                 throw new FileNotFoundException($"Catalog file not found: {catalogPath}");
-            if (!File.Exists(stockPath))
-                throw new FileNotFoundException($"Stock file not found: {stockPath}");
 
-            var stockData = ReadStockData(stockPath);
-            var combinedProducts = ReadAndCombineCatalogData(catalogPath, stockData);
+            ReadStock();
+            var combinedProducts = ReadAndCombineCatalogData(catalogPath);
 
             var products = combinedProducts
                 .Where(x => x.Active)
@@ -42,7 +39,7 @@ namespace Migration
                         new ProductId(index),
                         new Name(prod.Name.Replace(" Socks", "")),
                         new Category("???"), // TODO: we don't have categories in the legacy system
-                        new Price(prod.Price),
+                        new Price(prod.Price, 0),
                         new Stock(group.Sum(x => x.Stock))
                     );
                 })
@@ -51,29 +48,7 @@ namespace Migration
             return products;
         }
 
-        private static Dictionary<Guid, int> ReadStockData(string stockPath)
-        {
-            var stockData = new Dictionary<Guid, int>();
-
-            using var workbook = new XLWorkbook(stockPath);
-            var worksheet = workbook.Worksheet(1);
-            var rowCount = worksheet.LastRowUsed()?.RowNumber();
-
-            for (int row = 2; row <= rowCount; row++)
-            {
-                var productIdCell = worksheet.Cell(row, 1).GetValue<string>();
-                var stockQuantityCell = worksheet.Cell(row, 2).GetValue<int>();
-
-                if (Guid.TryParse(productIdCell, out var productId))
-                {
-                    stockData[productId] = stockQuantityCell;
-                }
-            }
-
-            return stockData;
-        }
-
-        private static List<LegacyCombinedProduct> ReadAndCombineCatalogData(string catalogPath, Dictionary<Guid, int> stockData)
+        private List<LegacyCombinedProduct> ReadAndCombineCatalogData(string catalogPath)
         {
             var products = new List<LegacyCombinedProduct>();
 
@@ -96,13 +71,70 @@ namespace Migration
                     Material = columns[8],
                     Description = columns[9].Trim('"'),
                     Brand = columns[10],
-                    Stock = stockData.GetValueOrDefault(productId, 0)
+                    Stock = GetStock(productId),
                 };
 
                 products.Add(product);
             }
 
             return products;
+        }
+
+        private record StockItem(Guid ProductId, int Stock);
+
+        private void ReadStock()
+        {
+            string stockPath = Path.Combine(_dataDirectory, "stock_inventory.xlsx");
+
+            if (!File.Exists(stockPath))
+                throw new FileNotFoundException($"Stock file not found: {stockPath}");
+
+            using var workbook = new XLWorkbook(stockPath);
+            var worksheet = workbook.Worksheet(1);
+            var rowCount = worksheet.LastRowUsed()?.RowNumber();
+
+            for (int row = 2; row <= rowCount; row++)
+            {
+                var productIdCell = worksheet.Cell(row, 1).GetValue<string>();
+                var stockQuantity = worksheet.Cell(row, 2).GetValue<int>();
+
+                if (Guid.TryParse(productIdCell, out var productId))
+                {
+                    _stock.Add(new StockItem(productId, stockQuantity));
+                }
+            }
+        }
+
+        private int GetStock(Guid productIdToFind)
+        {
+            return _stock.FirstOrDefault(x => x.ProductId == productIdToFind)?.Stock ?? 0;
+
+            // ATTN: This code would read the Excel every time we need a Stock
+            //       But that just took way too long for a single test to run.
+            //string stockPath = Path.Combine(_dataDirectory, "stock_inventory.xlsx");
+
+            //if (!File.Exists(stockPath))
+            //    throw new FileNotFoundException($"Stock file not found: {stockPath}");
+
+            //using var workbook = new XLWorkbook(stockPath);
+            //var worksheet = workbook.Worksheet(1);
+            //var rowCount = worksheet.LastRowUsed()?.RowNumber();
+
+            //for (int row = 2; row <= rowCount; row++)
+            //{
+            //    var productIdCell = worksheet.Cell(row, 1).GetValue<string>();
+            //    var stockQuantityCell = worksheet.Cell(row, 2).GetValue<int>();
+
+            //    if (Guid.TryParse(productIdCell, out var productId))
+            //    {
+            //        if (productId == productIdToFind)
+            //        {
+            //            return stockQuantityCell;
+            //        }
+            //    }
+            //}
+
+            //return 0;
         }
 
         private static string[] ParseCsvLine(string line)

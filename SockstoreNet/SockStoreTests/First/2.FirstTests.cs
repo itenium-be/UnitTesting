@@ -5,7 +5,7 @@ using Application.UseCases;
 using SockStoreTests.Mock;
 using Vocabulary;
 
-namespace SockStoreTests.Acceptance;
+namespace SockStoreTests.First;
 
 /// <summary>
 /// Fast
