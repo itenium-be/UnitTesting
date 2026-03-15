@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vocabulary", "Vocabulary\Vo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{E96FF2B7-814D-4E86-9B35-52BD2F80FA06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SockstoreApi", "SockStoreApi\SockstoreApi.csproj", "{69A5C505-A3C8-474C-B40C-DB59ED8849F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SockStoreApi", "SockStoreApi\SockStoreApi.csproj", "{69A5C505-A3C8-474C-B40C-DB59ED8849F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SockStoreTests", "SockStoreTests\SockStoreTests.csproj", "{622A0E07-A9A6-408F-AC2A-D5500EAD2D3D}"
 EndProject
