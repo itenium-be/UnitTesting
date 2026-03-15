@@ -50,4 +50,4 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Test
-        run: dotnet test --no-build --verbosity normal --filter "FullyQualifiedName!~FirstTestsIndependent"
+        run: dotnet test --no-build --verbosity normal --filter "FullyQualifiedName!~SockStoreTests.First"
