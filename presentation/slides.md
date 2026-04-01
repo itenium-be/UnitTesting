@@ -30,26 +30,26 @@ items:
 ---
 
 ---
-layout: default
+layout: quote-image
 ---
 
 # Inspirational Quote
 
-<div class="flex justify-center">
-  <img src="./images/meme-test-in-production.jpg" class="h-90" />
-</div>
+::image::
+
+![](./images/meme-test-in-production.png)
 
 ---
-layout: default
+layout: quote-image
 ---
 
 # Inspirational Quote
 
-<div class="flex justify-center">
-  <img src="./images/quote-jeff-atwood.jpg" class="h-90" />
-</div>
+::author::
 
-<!-- "Unit tests are so important that they should be a first class language construct" - Jeff Atwood -->
+::image::
+
+![](./images/quote-jeff-atwood.jpg)
 
 ---
 layout: section
