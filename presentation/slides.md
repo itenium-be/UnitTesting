@@ -66,7 +66,7 @@ layout: section
 Job of the Tech Lead / Architect
 
 ---
-layout: default
+layout: default-image
 ---
 
 # UnitTesting?
@@ -81,6 +81,10 @@ layout: default
 - Teach/Help with implementation
 
 </v-clicks>
+
+::image::
+
+![](./images/circle-futuristic-building.jpg)
 
 <!--
 Setup Testing: Setup the project, add the dependencies (xUnit, Mockito, ...), and have at least one working UnitTest even if it's a dummy one. If the framework for UnitTesting is already there, it's so much easier for the developers to actually write some tests.
@@ -234,7 +238,7 @@ layout: default
 </div>
 
 ---
-layout: default
+layout: default-image
 ---
 
 # But What?
@@ -249,6 +253,10 @@ layout: default
 
 </v-clicks>
 
+::image::
+
+![](./images/circle-sunny-landscape.jpg)
+
 <!--
 Happy Path: Have at least one test to cover the happy path where everything works entirely as expected.
 Branches: If you have an "if": make sure there is a test covering all if/else statements.
@@ -258,7 +266,7 @@ Boundaries: Boundary Value Analysis and Equivalence Partitioning.
 -->
 
 ---
-layout: default
+layout: default-image
 ---
 
 # But What?
@@ -282,8 +290,12 @@ Example 1: For 100% Code Coverage, 2 tests are needed. For 100% Branch Coverage,
 Example 2: Code Coverage: 1 test. Branch Coverage: 4 tests.
 -->
 
+::image::
+
+![](./images/circle-gnarled-tree.jpg)
+
 ---
-layout: default
+layout: default-image
 ---
 
 # But What?
@@ -297,6 +309,10 @@ layout: default
 - Edge Case Testing
 
 </v-clicks>
+
+::image::
+
+![](./images/circle-cliff.jpg)
 
 <!--
 Equivalence Partitioning: Example: we expect a Percentage between 0 and 100. An invalid low value (ex: -10), a correct value (ex: 20), an invalid high value (ex: 200).
@@ -315,7 +331,8 @@ layout: section
 Achievable Only By Avoiding I/O
 
 ---
-layout: default
+layout: default-image
+image-position: middle-right
 ---
 
 # Quick Feedback Loop
@@ -330,6 +347,10 @@ layout: default
 - Rest Calls
 
 </v-clicks>
+
+::image::
+
+![](./images/circle-hypnotic-spiral.jpg)
 
 <!--
 Database: If you use a Db in a "UnitTest", you need to setup this Db before the test so that it is in a predictable state. If multiple tests are using the same db, they could interfere with each other.
@@ -354,17 +375,18 @@ layout: default
 | Network File Access | 1-10 ms | ~10,000x or more |
 
 ---
-layout: section
+layout: image-content
 ---
 
 # Test Doubles
 
-::subtitle::
+::image::
 
 ![](./images/meme-test-doubles.jpg)
 
 ---
-layout: default
+layout: default-image
+size: lg
 ---
 
 # State vs Behavior
@@ -378,14 +400,18 @@ layout: default
 
 </v-clicks>
 
+::image::
+
+![](./images/circle-crown.jpg)
+
 <!--
 State: When updating an entity, the audit fields LastModifiedBy and LastModifiedOn are properly updated. When doing a calculation, assert that the result returned is as expected.
 Behavior: Verify that a method was (not) called, or called with specific arguments. Example: verify that an email is (not) sent, or that Repository.Save() is called.
 -->
 
 ---
-layout: default
-size: size-sm
+layout: default-image
+size: lg
 ---
 
 # Mocking
@@ -400,6 +426,10 @@ size: size-sm
 
 </v-clicks>
 
+::image::
+
+![](./images/circle-clown.jpg)
+
 <!--
 Which one to use? WHO CARES? Use whatever makes most sense: do not use a mock for a DTO, just instantiate it.
 Dummy: Could be "null" or a NullObject or a default value.
@@ -410,14 +440,12 @@ Sometimes also handy OUTSIDE of testing: the real implementation is not availabl
 -->
 
 ---
-layout: default
+layout: quote-alt
 ---
 
-# Mocking
+Abstract the I/O dependencies away.
 
-## Abstract the I/O dependencies away
-
-## Program against an interface, not an implementation
+Program against an interface, not an implementation.
 
 <!--
 Inject interfaces for things that need to be mocked. Dependency Injection is your friend here.
@@ -427,8 +455,7 @@ Messy Setup Code: If you're having a lot of mock setup, does everything need to 
 -->
 
 ---
-layout: default
-size: size-xs
+layout: comparison
 ---
 
 # Mocking
@@ -440,18 +467,18 @@ size: size-xs
 
 ### Mockist / Solitary
 
-- Mock everything
-- Test complicated BL in isolation
-- May be testing implementation instead of behavior
+- 🧐 Mock everything
+- 🧐 Test complicated BL in isolation
+- ⚠️ May be testing implementation instead of behavior
 
 </div>
 <div class="col">
 
 ### Classicist / Sociable
 
-- Mock I/O and/or "awkward" things
-- Tests survive refactorings more easily
-- Danger of testing the same thing multiple times
+- 🧐 Mock I/O and/or "awkward" things
+- 🧐 Tests survive refactorings more easily
+- ⚠️ Danger of testing the same thing multiple times
 
 </div>
 </div>
@@ -592,7 +619,7 @@ Defect Insertion: Your test must be able to fail by changing the production code
 -->
 
 ---
-layout: default
+layout: default-image
 ---
 
 # Common Pitfalls
@@ -604,6 +631,10 @@ layout: default
 Are you testing what you think you are testing?
 
 </div>
+
+::image::
+
+![](./images/circle-sinkhole.jpg)
 
 <!--
 If you've only ever seen a test be "Green" - are you sure you are testing the thing you think you are testing?
@@ -622,7 +653,7 @@ layout: default
 </div>
 
 ---
-layout: default
+layout: default-image
 ---
 
 # Common Pitfalls
@@ -633,6 +664,10 @@ Avoid brittle tests
 
 </div>
 
+::image::
+
+![](./images/circle-dark-pit.jpg)
+
 <!--
 Are all your tests failing after any change made to the code? Are you validating too much? Only validate what you are testing.
 When doing multiple assertions: consider SoftAssertions.
@@ -641,7 +676,7 @@ A test should not have logic in itself: switch, if, else statements, foreach, fo
 -->
 
 ---
-layout: default
+layout: default-image
 ---
 
 # Common Pitfalls
@@ -657,6 +692,10 @@ Failures should be informative
 Avoid: `CollectionAssert(bigCollection, otherCollection)`
 
 </div>
+
+::image::
+
+![](./images/circle-cavern.jpg)
 
 <!--
 If you are comparing 2 (big) collections and the test fails because one collection contains 182 items and the other one 200 items - what does this mean?
@@ -760,7 +799,7 @@ TDD can be used for the entire system OR take advantage of continuous small impr
 -->
 
 ---
-layout: default
+layout: default-image
 ---
 
 # Test Driven Development
@@ -775,6 +814,10 @@ layout: default
 - Initial slow down
 
 </v-clicks>
+
+::image::
+
+![](./images/circle-purple-vortex.jpg)
 
 <!--
 Useless Tests: Personal opinion: if you like working TDD, go for it. If you don't like it: still consider using it when you are stuck and can't seem to make progress. But most importantly: not doing TDD does not mean you can skip the UnitTest suite entirely.
