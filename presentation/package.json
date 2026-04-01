@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build --base /2022-08-25-UnitTesting/",
+    "export": "slidev export --format pdf"
+  },
+  "dependencies": {
+    "@slidev/cli": "^51.0.0"
+  }
+}
