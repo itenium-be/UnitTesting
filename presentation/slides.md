@@ -14,7 +14,7 @@ type: Theoretical
 
 ![](./images/cover-art.jpg)
 
-<!-- In a poorly designed system, making a change feels like jumping off a cliff to avoid a tiger. -->
+<!-- Quote from "Working Effectively with Legacy Code": In a poorly designed system, making a change feels like jumping off a cliff to avoid a tiger. -->
 
 ---
 layout: agenda
@@ -28,6 +28,8 @@ items:
   - Common Pitfalls
   - TDD
 ---
+
+<!-- What – A Definition: Unit testing is the process of writing code to test the behavior and functionality of your system. -->
 
 ---
 layout: quote-image
@@ -50,6 +52,8 @@ layout: quote-image
 ::image::
 
 ![](./images/quote-jeff-atwood.jpg)
+
+<!-- For example: Eiffel, Rust, Elixir -->
 
 ---
 layout: section
@@ -78,6 +82,12 @@ layout: default
 
 </v-clicks>
 
+<!--
+Setup Testing: Setup the project, add the dependencies (xUnit, Mockito, ...), and have at least one working UnitTest even if it's a dummy one. If the framework for UnitTesting is already there, it's so much easier for the developers to actually write some tests.
+Configure CI: If the tests do not run on the CI and block the CI in case of issues - it's basically the same as not having a UnitTest suite at all.
+Teach/Help: Many developers still don't have (a lot) of experience with UnitTesting. They may need help writing a test for a tricky part of code.
+-->
+
 ---
 layout: section
 ---
@@ -102,6 +112,16 @@ layout: default
 
 </v-clicks>
 
+<!--
+Small continuous steps forward: When the going gets so tough that you are not making progress at all. One of the advantages of working in a TDD style.
+Avoiding Regressions: After every change to the code, the test suite is run. You can also refactor without fear. (Working Effectively with Legacy Code)
+Living Documentation: Weird rules are defined in the code. Also a way for new developers to get acquainted with the API surface. This is also a case AGAINST parameterized tests - they typically leave you hanging when they fail.
+Quick Feedback Loop: If it takes 30min to run the test suite, developers will not bother running it locally. Avoid I/O: network, FileSystem, DB, ...
+Fixing Bugs: Found a bug? Write tests for it and the test suite will catch regressions.
+Thinking About Design: Adding UnitTests forces the developer to think about Design.
+Pay More Later: Writing tests takes time. How much time is wasted? YES - Google was held captive by fear of change, until they made UnitTesting mandatory. The team needs to get over "the hump".
+-->
+
 ---
 layout: default
 ---
@@ -119,6 +139,14 @@ layout: default
 
 </v-clicks>
 
+<!--
+Fast: 1/10th of a second
+Independent or Isolated: Test sequence should not be important. Avoid tests that need to run after a certain test in order to setup the inputs correctly.
+Repeatable: Do not depend on things that can change: the records in a database, relying on the current time, a certain file being on the FileSystem, ...
+Self-Validating: Tests should succeed or fail without human interaction. Do not check console.logs manually.
+Timely: Writing the tests later is more expensive because we're already less familiar with the problem and the code
+-->
+
 ---
 layout: default
 ---
@@ -135,6 +163,13 @@ layout: default
 
 </v-clicks>
 
+<!--
+Business Logic: UnitTests can be your documentation for that Illogical Business Logic.
+Legacy Code: Fixing one thing breaks another thing? All the time? UnitTests can be your friend.
+Technical Frameworks: If you are introducing design to eliminate duplication. These "small frameworks" should be tested thoroughly.
+"select isn't broken": Pragmatic Programmers tip: It is rare to find a bug in the OS, Compiler, Language framework libraries. Do NOT write tests for these things.
+-->
+
 ---
 layout: section
 ---
@@ -142,10 +177,17 @@ layout: section
 # 100% Coverage?
 
 ---
-layout: content-image
+layout: image-content
+size: md
 ---
 
 # 100% Coverage?
+
+::image::
+
+![](./images/meme-100-coverage-257-bugs.jpg)
+
+::content::
 
 <v-clicks>
 
@@ -158,9 +200,14 @@ layout: content-image
 
 </v-clicks>
 
-::image::
-
-![](./images/meme-100-coverage-257-bugs.jpg)
+<!--
+Personal Choice - however is there much value in testing the following:
+Startup Code: Do you want to test setting up your IOC container?
+Trivial Code: Do you want to test constructors? Getters/Setters?
+Branchless Code: If there are no if/switch branches - do you still want to test it?
+Technical Code: Do you want to test your implementation of ILogger? EntityFramework EntityConfiguration?
+One-time migrations: Do you want tests for a migration that will run only once?
+-->
 
 ---
 layout: default
@@ -173,6 +220,8 @@ layout: default
 <div class="flex justify-center mt-8">
   <img src="./images/meme-2-unit-tests-no-integration.jpg" class="h-80" />
 </div>
+
+<!-- Note that we are only talking about UnitTesting here. Other tests, like integration tests are also needed! -->
 
 ---
 layout: default
@@ -200,6 +249,14 @@ layout: default
 
 </v-clicks>
 
+<!--
+Happy Path: Have at least one test to cover the happy path where everything works entirely as expected.
+Branches: If you have an "if": make sure there is a test covering all if/else statements.
+Unhappy Paths: Also test that the software behaves as expected when things do go wrong. Validation failure, unexpected exceptions, short circuiting guard clauses, ...
+Scenarios: If you know the test data / scenarios the Tester/FA is going to use, you can write those tests.
+Boundaries: Boundary Value Analysis and Equivalence Partitioning.
+-->
+
 ---
 layout: default
 ---
@@ -219,6 +276,12 @@ if (condition2) {} else {}
 if (cond1 && (cond2 || cond3)) {}
 ```
 
+<!--
+Code Coverage aka Statement Coverage vs Branch Coverage aka Decision Coverage
+Example 1: For 100% Code Coverage, 2 tests are needed. For 100% Branch Coverage, 4 tests are needed.
+Example 2: Code Coverage: 1 test. Branch Coverage: 4 tests.
+-->
+
 ---
 layout: default
 ---
@@ -234,6 +297,12 @@ layout: default
 - Edge Case Testing
 
 </v-clicks>
+
+<!--
+Equivalence Partitioning: Example: we expect a Percentage between 0 and 100. An invalid low value (ex: -10), a correct value (ex: 20), an invalid high value (ex: 200).
+Boundary Value Analysis: Instead of using semi-random values, we use values at the boundaries. The values -1 and 0, the values 100 and 101.
+Edge Case Testing: Add tests for NULL, PositiveInfinity, NaN, ...
+-->
 
 ---
 layout: section
@@ -261,6 +330,13 @@ layout: default
 - Rest Calls
 
 </v-clicks>
+
+<!--
+Database: If you use a Db in a "UnitTest", you need to setup this Db before the test so that it is in a predictable state. If multiple tests are using the same db, they could interfere with each other.
+Network Access: Some other service, endpoint, dns, ...
+Rest Calls: Talk to some third party service to send email(s)
+=> MOCKING
+-->
 
 ---
 layout: default
@@ -302,6 +378,11 @@ layout: default
 
 </v-clicks>
 
+<!--
+State: When updating an entity, the audit fields LastModifiedBy and LastModifiedOn are properly updated. When doing a calculation, assert that the result returned is as expected.
+Behavior: Verify that a method was (not) called, or called with specific arguments. Example: verify that an email is (not) sent, or that Repository.Save() is called.
+-->
+
 ---
 layout: default
 size: size-sm
@@ -319,6 +400,15 @@ size: size-sm
 
 </v-clicks>
 
+<!--
+Which one to use? WHO CARES? Use whatever makes most sense: do not use a mock for a DTO, just instantiate it.
+Dummy: Could be "null" or a NullObject or a default value.
+Fake: Example InMemoryDb.
+Spy: How many times was the EmailService invoked?
+Mock: Typically with a mocking framework (Mockito/Moq).
+Sometimes also handy OUTSIDE of testing: the real implementation is not available yet, or the real implementation costs the company money.
+-->
+
 ---
 layout: default
 ---
@@ -328,6 +418,13 @@ layout: default
 ## Abstract the I/O dependencies away
 
 ## Program against an interface, not an implementation
+
+<!--
+Inject interfaces for things that need to be mocked. Dependency Injection is your friend here.
+Also: DateTimeProvider - writing UnitTests for code that does a GetCurrentDate() is hard, so we provide an interface so we can return a canned date value.
+Strict Mock vs Non-Strict Mock: Strict will fail for anything that was not explicitly setup.
+Messy Setup Code: If you're having a lot of mock setup, does everything need to be a mock, really?
+-->
 
 ---
 layout: default
@@ -359,6 +456,13 @@ size: size-xs
 </div>
 </div>
 
+<!--
+Mockist: Watch out for "Tautological Tests". You want to test BEHAVIOR, not IMPLEMENTATION.
+Classicist: https://www.thoughtworks.com/insights/blog/mockists-are-dead-long-live-classicists
+Also see: https://martinfowler.com/articles/mocksArentStubs.html
+Solitary vs Sociable: https://martinfowler.com/bliki/UnitTest.html
+-->
+
 ---
 layout: section
 ---
@@ -368,6 +472,12 @@ layout: section
 ::subtitle::
 
 ![](./images/meme-tautological-lobster.jpg)
+
+<!--
+Tautological Tests: You want to test BEHAVIOR, not IMPLEMENTATION.
+https://fabiopereira.me/blog/2010/05/27/ttdd-tautological-test-driven-development-anti-pattern/
+https://chrisoldwood.blogspot.com/2016/11/tautologies-in-tests.html
+-->
 
 ---
 layout: default
@@ -410,6 +520,12 @@ layout: default
 
 </v-clicks>
 
+<!--
+Testing Framework: xUnit, JUnit, NUnit. Mocking Framework: Mockito, Moq, NSubstitute.
+Naming Convention: One possibility is MethodName_StateUnderTest/Scenario_ExpectedBehavior. Ex: "IsValidFileName_validFile_returnsTrue"
+Close to the code: If the UnitTests are "far" away from the code, developers are less inclined to write them. If the tests are right next to the code itself, the dev will be much more likely to add them. But expect strong push-back when you want to introduce this practice.
+-->
+
 ---
 layout: comparison
 ---
@@ -441,6 +557,13 @@ layout: comparison
 Please don't add these three as a comment in each test
 </div>
 
+<!--
+Arrange: setup the SUT (System Under Test), CUT (Code Under Test) by creating and setting up objects.
+Act: act on an object - Invoke the method.
+Assert: (and/or verify) that everything went as expected.
+There was also "Record-And-Replay" but no one seems to be using that anymore.
+-->
+
 ---
 layout: section
 ---
@@ -463,6 +586,11 @@ layout: default
   <img src="./images/meme-inception-deeper.jpg" class="h-80" />
 </div>
 
+<!--
+Do not test things that do not happen. Do not test scenarios that are "illegal" for the business. Do not write branches that are only hit during UnitTesting.
+Defect Insertion: Your test must be able to fail by changing the production code. If you cannot make the test fail by changing the code, it's not testing anything.
+-->
+
 ---
 layout: default
 ---
@@ -476,6 +604,12 @@ layout: default
 Are you testing what you think you are testing?
 
 </div>
+
+<!--
+If you've only ever seen a test be "Green" - are you sure you are testing the thing you think you are testing?
+Or are you falling back due to a GuardClause short circuit which accidentally results in the same Assertions being true?
+Example: Testing a "RecordNotFound" results in an Exception but we don't actually get so far into the test because it crashes because the FeatureFlags object is null.
+-->
 
 ---
 layout: default
@@ -499,6 +633,13 @@ Avoid brittle tests
 
 </div>
 
+<!--
+Are all your tests failing after any change made to the code? Are you validating too much? Only validate what you are testing.
+When doing multiple assertions: consider SoftAssertions.
+Is your API too volatile? Think about your API / Design. Perhaps you can test on a higher level where there is a more stable API? For example at a "Pinch Point" - a place where we can detect ALL effects of a code change.
+A test should not have logic in itself: switch, if, else statements, foreach, for, while loops.
+-->
+
 ---
 layout: default
 ---
@@ -516,6 +657,11 @@ Failures should be informative
 Avoid: `CollectionAssert(bigCollection, otherCollection)`
 
 </div>
+
+<!--
+If you are comparing 2 (big) collections and the test fails because one collection contains 182 items and the other one 200 items - what does this mean?
+Items 65 in the actual/expected collections differ - what does this mean?
+-->
 
 ---
 layout: section
@@ -543,6 +689,11 @@ To test code, we need to change it
 
 </div>
 
+<!--
+Seams: Change the behavior of a program without changing the program. Virtual methods & Polymorphism. Inject different implementations of an interface. Preprocessing Seams (ex: ConditionalAttributes, Compiler Directives).
+Sensing Variable: Introduce a variable that can be tested against.
+-->
+
 ---
 layout: default
 ---
@@ -560,6 +711,8 @@ layout: default
   - Register stubs to the IOC
 
 </v-clicks>
+
+<!-- Internal setter: InternalsVisibleTo assembly directive. -->
 
 ---
 layout: default
@@ -601,6 +754,11 @@ layout: content-image
 
 ![](./images/section-tdd.jpg)
 
+<!--
+The Refactor step is often indicated as "Remove Duplication". Logically TDD results in 100% coverage.
+TDD can be used for the entire system OR take advantage of continuous small improvements when you are stuck on a difficult piece of code.
+-->
+
 ---
 layout: default
 ---
@@ -618,6 +776,10 @@ layout: default
 
 </v-clicks>
 
+<!--
+Useless Tests: Personal opinion: if you like working TDD, go for it. If you don't like it: still consider using it when you are stuck and can't seem to make progress. But most importantly: not doing TDD does not mean you can skip the UnitTest suite entirely.
+-->
+
 ---
 layout: content-image
 ---
@@ -629,6 +791,11 @@ layout: content-image
 ::image::
 
 ![](./images/section-cycle-fear.jpg)
+
+<!--
+The Cycle of Fear: The more stress you feel, the less testing you will do. The less testing you do, the more errors you'll make. The more errors you make, the more stress you feel...
+Write tests until fear is transformed into boredom.
+-->
 
 ---
 layout: default
@@ -660,6 +827,8 @@ layout: quote
 # And Remember...
 
 ![](./images/meme-code-is-dark.jpg)
+
+<!-- No matter how much testing is done on each level of the testing pyramid, no system is entirely bug free. -->
 
 ---
 layout: socials
