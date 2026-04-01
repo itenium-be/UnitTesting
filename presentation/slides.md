@@ -491,12 +491,12 @@ Solitary vs Sociable: https://martinfowler.com/bliki/UnitTest.html
 -->
 
 ---
-layout: section
+layout: image-content
 ---
 
 # Tautological Tests
 
-::subtitle::
+::image::
 
 ![](./images/meme-tautological-lobster.jpg)
 
@@ -619,18 +619,12 @@ Defect Insertion: Your test must be able to fail by changing the production code
 -->
 
 ---
-layout: default-image
+layout: quote-alt
 ---
 
-# Common Pitfalls
-
-## Make sure your test fails at least once
-
-<div class="full-width text-xxl text-center mt-16">
+Make sure your test fails at least once.
 
 Are you testing what you think you are testing?
-
-</div>
 
 ::image::
 
@@ -643,26 +637,17 @@ Example: Testing a "RecordNotFound" results in an Exception but we don't actuall
 -->
 
 ---
-layout: default
+layout: image-content
+image: ./images/comic-coverage-cheat.png
 ---
 
 # What are you testing?
 
-<div class="flex justify-center">
-  <img src="./images/comic-coverage-cheat.png" class="h-100" />
-</div>
-
 ---
-layout: default-image
+layout: quote-alt
 ---
 
-# Common Pitfalls
-
-<div class="full-width text-xxl text-center mt-24">
-
-Avoid brittle tests
-
-</div>
+Avoid brittle tests.
 
 ::image::
 
@@ -713,20 +698,12 @@ layout: section
 The UnitTesting Dilemma
 
 ---
-layout: default
+layout: quote-alt
 ---
 
-# Legacy Code
+To change the code, we need tests.
 
-## The UnitTesting Dilemma
-
-<div class="full-width text-xl text-center mt-16">
-
-To change the code, we need tests
-
-To test code, we need to change it
-
-</div>
+To test code, we need to change it.
 
 <!--
 Seams: Change the behavior of a program without changing the program. Virtual methods & Polymorphism. Inject different implementations of an interface. Preprocessing Seams (ex: ConditionalAttributes, Compiler Directives).
@@ -780,7 +757,7 @@ layout: section
 Red -- Green -- Refactor
 
 ---
-layout: content-image
+layout: default-image
 ---
 
 # Test Driven Development
@@ -824,7 +801,7 @@ Useless Tests: Personal opinion: if you like working TDD, go for it. If you don'
 -->
 
 ---
-layout: content-image
+layout: default-image
 ---
 
 # Breaking the Cycle of Fear
@@ -841,7 +818,7 @@ Write tests until fear is transformed into boredom.
 -->
 
 ---
-layout: default
+layout: content-image
 ---
 
 # Resources
@@ -861,6 +838,14 @@ layout: default
 
 - Fowler: Mocks Aren't Stubs
 
+</div>
+
+::image::
+
+<div class="flex flex-col items-center gap-1 h-full justify-center">
+  <img src="./images/book-art-of-unit-testing.jpg" class="max-h-[30%] w-auto rounded shadow" />
+  <img src="./images/book-legacy-code.jpg" class="max-h-[30%] w-auto rounded shadow" />
+  <img src="./images/book-tdd-by-example.jpg" class="max-h-[30%] w-auto rounded shadow" />
 </div>
 
 ---
