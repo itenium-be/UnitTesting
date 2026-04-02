@@ -5,6 +5,10 @@ transition: fade
 session-time: 70min
 track: Architecture
 type: Theoretical
+h1:
+  type: slashes
+  color: muted
+  position: end
 ---
 
 # UnitTesting
@@ -66,7 +70,11 @@ layout: section
 Job of the Tech Lead / Architect
 
 ---
-layout: default-image
+layout: default-aside
+h1:
+  type: hash
+  color: primary
+  position: start
 ---
 
 # UnitTesting?
@@ -100,6 +108,10 @@ layout: section
 
 ---
 layout: default
+h1:
+  type: semicolon
+  color: muted
+  position: start
 ---
 
 # Why
@@ -153,6 +165,10 @@ Timely: Writing the tests later is more expensive because we're already less fam
 
 ---
 layout: default
+h1:
+  type: brackets
+  color: muted
+  position: all
 ---
 
 # What
@@ -181,7 +197,7 @@ layout: section
 # 100% Coverage?
 
 ---
-layout: image-content
+layout: two-col-image-text
 size: md
 ---
 
@@ -214,31 +230,29 @@ One-time migrations: Do you want tests for a migration that will run only once?
 -->
 
 ---
-layout: default
+layout: two-col-image-text
+image: ./images/meme-2-unit-tests-no-integration.jpg
 ---
 
 # 100% Coverage?
 
 ## It does not cover all bases
 
-<div class="flex justify-center mt-8">
-  <img src="./images/meme-2-unit-tests-no-integration.jpg" class="h-80" />
-</div>
-
 <!-- Note that we are only talking about UnitTesting here. Other tests, like integration tests are also needed! -->
 
 ---
-layout: default
+layout: two-col-image-text
+image: ./images/comic-trivial-test.png
+h1:
+  type: dot
+  color: muted
+  position: end
 ---
 
 # 100% Coverage?
 
-<div class="flex justify-center">
-  <img src="./images/comic-trivial-test.png" class="h-100" />
-</div>
-
 ---
-layout: default-image
+layout: default-aside
 ---
 
 # But What?
@@ -266,7 +280,11 @@ Boundaries: Boundary Value Analysis and Equivalence Partitioning.
 -->
 
 ---
-layout: default-image
+layout: default-aside
+h2:
+  type: brackets
+  color: muted
+  position: all
 ---
 
 # But What?
@@ -295,7 +313,11 @@ Example 2: Code Coverage: 1 test. Branch Coverage: 4 tests.
 ![](./images/circle-gnarled-tree.jpg)
 
 ---
-layout: default-image
+layout: default-aside
+h1:
+  type: braces
+  color: primary
+  position: all
 ---
 
 # But What?
@@ -331,8 +353,16 @@ layout: section
 Achievable Only By Avoiding I/O
 
 ---
-layout: default-image
+layout: default-aside
 image-position: middle-right
+h1:
+  type: semicolon
+  color: muted
+  position: end
+h2:
+  type: braces
+  color: muted
+  position: 4-5
 ---
 
 # Quick Feedback Loop
@@ -375,7 +405,7 @@ layout: default
 | Network File Access | 1-10 ms | ~10,000x or more |
 
 ---
-layout: image-content
+layout: two-col-image-text
 ---
 
 # Test Doubles
@@ -385,8 +415,12 @@ layout: image-content
 ![](./images/meme-test-doubles.jpg)
 
 ---
-layout: default-image
+layout: default-aside
 size: lg
+h1:
+  type: brackets
+  color: muted
+  position: all
 ---
 
 # State vs Behavior
@@ -410,8 +444,12 @@ Behavior: Verify that a method was (not) called, or called with specific argumen
 -->
 
 ---
-layout: default-image
+layout: default-aside
 size: lg
+h1:
+  type: semicolon
+  color: muted
+  position: start
 ---
 
 # Mocking
@@ -440,7 +478,7 @@ Sometimes also handy OUTSIDE of testing: the real implementation is not availabl
 -->
 
 ---
-layout: quote-alt
+layout: statement
 ---
 
 Abstract the I/O dependencies away.
@@ -468,7 +506,7 @@ layout: comparison
 ### Mockist / Solitary
 
 - 🧐 Mock everything
-- 🧐 Test complicated BL in isolation
+- ✅ Test complicated BL in isolation
 - ⚠️ May be testing implementation instead of behavior
 
 </div>
@@ -477,7 +515,7 @@ layout: comparison
 ### Classicist / Sociable
 
 - 🧐 Mock I/O and/or "awkward" things
-- 🧐 Tests survive refactorings more easily
+- ✅ Tests survive refactorings more easily
 - ⚠️ Danger of testing the same thing multiple times
 
 </div>
@@ -491,7 +529,11 @@ Solitary vs Sociable: https://martinfowler.com/bliki/UnitTest.html
 -->
 
 ---
-layout: image-content
+layout: two-col-image-text
+h1:
+  type: semicolon
+  color: muted
+  position: end
 ---
 
 # Tautological Tests
@@ -533,6 +575,10 @@ layout: section
 
 ---
 layout: default
+h1:
+  type: brackets
+  color: primary
+  position: all
 ---
 
 # Implementation
@@ -555,6 +601,10 @@ Close to the code: If the UnitTests are "far" away from the code, developers are
 
 ---
 layout: comparison
+h1:
+  type: braces
+  color: primary
+  position: all
 ---
 
 # Implementation
@@ -602,16 +652,17 @@ layout: section
 Only test production code
 
 ---
-layout: default
+layout: two-col-image-text
+image: ./images/meme-inception-deeper.jpg
+h2:
+  type: braces
+  color: muted
+  position: 2-4
 ---
 
 # Common Pitfalls
 
 ## Only test production code
-
-<div class="flex justify-center mt-4">
-  <img src="./images/meme-inception-deeper.jpg" class="h-80" />
-</div>
 
 <!--
 Do not test things that do not happen. Do not test scenarios that are "illegal" for the business. Do not write branches that are only hit during UnitTesting.
@@ -619,7 +670,7 @@ Defect Insertion: Your test must be able to fail by changing the production code
 -->
 
 ---
-layout: quote-alt
+layout: statement
 ---
 
 Make sure your test fails at least once.
@@ -637,14 +688,14 @@ Example: Testing a "RecordNotFound" results in an Exception but we don't actuall
 -->
 
 ---
-layout: image-content
+layout: two-col-image-text
 image: ./images/comic-coverage-cheat.png
 ---
 
 # What are you testing?
 
 ---
-layout: quote-alt
+layout: statement
 ---
 
 Avoid brittle tests.
@@ -661,7 +712,7 @@ A test should not have logic in itself: switch, if, else statements, foreach, fo
 -->
 
 ---
-layout: default-image
+layout: default-aside
 ---
 
 # Common Pitfalls
@@ -698,7 +749,7 @@ layout: section
 The UnitTesting Dilemma
 
 ---
-layout: quote-alt
+layout: statement
 ---
 
 To change the code, we need tests.
@@ -712,6 +763,10 @@ Sensing Variable: Introduce a variable that can be tested against.
 
 ---
 layout: default
+h2:
+  type: dot
+  color: muted
+  position: end
 ---
 
 # Legacy Code
@@ -732,6 +787,10 @@ layout: default
 
 ---
 layout: default
+h1:
+  type: hash
+  color: primary
+  position: start
 ---
 
 # Legacy Code
@@ -757,7 +816,15 @@ layout: section
 Red -- Green -- Refactor
 
 ---
-layout: default-image
+layout: default-aside
+h1:
+  type: dot
+  color: primary
+  position: end
+h2:
+  type: slashes
+  color: muted
+  position: end
 ---
 
 # Test Driven Development
@@ -776,7 +843,7 @@ TDD can be used for the entire system OR take advantage of continuous small impr
 -->
 
 ---
-layout: default-image
+layout: default-aside
 ---
 
 # Test Driven Development
@@ -801,7 +868,11 @@ Useless Tests: Personal opinion: if you like working TDD, go for it. If you don'
 -->
 
 ---
-layout: default-image
+layout: default-aside
+h1:
+  type: brackets
+  color: primary
+  position: all
 ---
 
 # Breaking the Cycle of Fear
@@ -818,10 +889,24 @@ Write tests until fear is transformed into boredom.
 -->
 
 ---
-layout: content-image
+layout: two-col-image-text
+h1:
+  type: braces
+  color: primary
+  position: all
 ---
 
 # Resources
+
+::image::
+
+<div class="flex flex-col items-center gap-1 h-full justify-center pl-4">
+  <img src="./images/book-art-of-unit-testing.jpg" class="max-h-[30%] w-auto rounded shadow" />
+  <img src="./images/book-legacy-code.jpg" class="max-h-[30%] w-auto rounded shadow" />
+  <img src="./images/book-tdd-by-example.jpg" class="max-h-[30%] w-auto rounded shadow" />
+</div>
+
+::content::
 
 **Books:**
 
@@ -834,18 +919,10 @@ layout: content-image
 
 </v-clicks>
 
-<div class="mt-4">
+<div v-click class="mt-4">
 
 - Fowler: Mocks Aren't Stubs
 
-</div>
-
-::image::
-
-<div class="flex flex-col items-center gap-1 h-full justify-center">
-  <img src="./images/book-art-of-unit-testing.jpg" class="max-h-[30%] w-auto rounded shadow" />
-  <img src="./images/book-legacy-code.jpg" class="max-h-[30%] w-auto rounded shadow" />
-  <img src="./images/book-tdd-by-example.jpg" class="max-h-[30%] w-auto rounded shadow" />
 </div>
 
 ---
@@ -864,6 +941,10 @@ layout: socials
 
 ---
 layout: default
+h1:
+  type: semicolon
+  color: muted
+  position: start
 ---
 
 # Powerpoint Source
