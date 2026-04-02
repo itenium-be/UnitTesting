@@ -104,13 +104,13 @@ layout: default
     </defs>
     <!-- E2E - top -->
     <path d="M240,15 L330,115 L150,115 Z" fill="#10b981"/>
-    <text x="240" y="78" text-anchor="middle" fill="white" font-weight="bold" font-size="14">E2E</text>
+    <text x="240" y="95" text-anchor="middle" fill="white" font-weight="bold" font-size="7">E2E</text>
     <!-- Integration - middle -->
     <path d="M150,115 L330,115 L400,235 L80,235 Z" fill="#06b6d4"/>
-    <text x="240" y="185" text-anchor="middle" fill="white" font-weight="bold" font-size="16">Integration</text>
+    <text x="240" y="182" text-anchor="middle" fill="white" font-weight="bold" font-size="8">Integration</text>
     <!-- Unit - bottom (with glow) -->
     <path d="M80,235 L400,235 L450,355 Q458,375 435,375 L45,375 Q22,375 30,355 Z" fill="#ec4899" filter="url(#glow)"/>
-    <text x="240" y="318" text-anchor="middle" fill="white" font-weight="bold" font-size="18">Unit</text>
+    <text x="240" y="325" text-anchor="middle" fill="white" font-weight="bold" font-size="9">Unit</text>
   </svg>
 
   <!-- Right: Cost arrow -->
