@@ -95,7 +95,9 @@ layout: default
   <svg width="480" height="380" viewBox="0 0 480 380">
     <defs>
       <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+        <feGaussianBlur stdDeviation="6" result="coloredBlur">
+          <animate attributeName="stdDeviation" values="6;20;6" dur="2s" repeatCount="indefinite"/>
+        </feGaussianBlur>
         <feMerge>
           <feMergeNode in="coloredBlur"/>
           <feMergeNode in="SourceGraphic"/>
