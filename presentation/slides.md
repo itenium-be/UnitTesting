@@ -271,6 +271,38 @@ h1:
 layout: default-aside
 ---
 
+# Mutation Testing
+## Test what your code coverage % is worth
+
+<v-clicks>
+
+- **Mutate** — Automatically inject bugs into your code
+- **Test** — Run your test suite against mutants
+- **Survive?** — If tests pass, they're weak
+- **Killed?** — Your tests caught the bug
+
+</v-clicks>
+
+<div v-click class="mt-8">
+
+Tools: **Stryker** (JS/TS), **PITest** (Java), **Stryker.NET** (C#)
+
+</div>
+
+::image::
+
+![](./images/mutation-testing.png)
+
+<!--
+Mutation testing validates test quality, not just coverage. A mutant "survives" if your tests don't catch the injected bug.
+Common mutations: change > to >=, replace + with -, remove method calls, change true to false.
+High mutation score = tests actually verify behavior. 100% coverage with 50% mutation score = weak tests.
+-->
+
+---
+layout: default-aside
+---
+
 # But What?
 
 <v-clicks>
