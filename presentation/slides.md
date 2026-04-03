@@ -834,40 +834,39 @@ expect(emailService.send).toHaveBeenCalledWith(order.customerEmail)
 
 ---
 layout: code
-code-size: 0.95em
+code-size: 1.07em
 h1:
   type: brackets
   color: muted
-  position: 2
+  position: all
 ---
 
 # Parameterized Tests
 
-```ts {1-6|8-14|all}
-// ✅ Use parameterized: same logic, different inputs
-test.each([
-  { input: -1, expected: false },
-  { input: 0,  expected: false },
-  { input: 2,  expected: true },
-  { input: 97, expected: true },
-])("isPrime($input) returns $expected", ({ input, expected }) => {
-  expect(isPrime(input)).toBe(expected)
-})
+```python {1-3|5-7|9-11|all}
+@pytest.mark.parametrize("val", [0, 50, 100])
+def test_accepts_valid_range(val):
+    assert is_valid_percentage(val)
 
-// ❌ Don't parameterize: different scenarios, different intent
-// "user with expired token" vs "user with no token"
-//  → separate tests with descriptive names
+@pytest.mark.parametrize("val", [-1, -20, 101, 200])
+def test_rejects_out_of_range(val):
+    assert not is_valid_percentage(val)
+
+@pytest.mark.parametrize("val", [None, float('nan')])
+def test_rejects_edge_cases(val):
+    assert not is_valid_percentage(val)
 ```
 
-<div class="mt-4 text-center text-2xl grid">
-  <div v-click.hide="1" class="text-emerald-400 col-start-1 row-start-1">Boundaries &amp; equivalence classes → <strong>parameterize</strong></div>
-  <div v-click="[1,2]" class="text-orange-400 col-start-1 row-start-1">Different scenarios or business rules → <strong>separate tests</strong></div>
+<div class="mt-2 text-center text-2xl grid">
+  <div v-click.hide="1" class="text-emerald-400 col-start-1 row-start-1"><strong>Valid values</strong> — boundaries + middle of the valid range</div>
+  <div v-click="[1,2]" class="text-cyan-400 col-start-1 row-start-1"><strong>Out of range</strong> — boundaries + equivalence partitions</div>
+  <div v-click="[2,3]" class="text-pink-400 col-start-1 row-start-1"><strong>Edge cases</strong> — null, NaN, Infinity</div>
 </div>
 
 <!--
-Parameterized tests shine for boundary value analysis and equivalence partitioning — exactly the cases we discussed earlier.
-But they obscure intent when scenarios are conceptually different. When a parameterized test fails, the failure message is often just "row 3 failed" — you lose the descriptive test name that tells you WHAT broke.
-Rule of thumb: if you can describe all cases with "same function, different numbers" → parameterize. If each case has a different story → separate tests.
+Parameterized tests shine for boundary value analysis and equivalence partitioning — exactly the cases from the earlier Boundaries slide.
+Same function, different inputs → parameterize. Different scenarios with different intent → write separate tests with descriptive names.
+When a parameterized test fails, the framework shows which input failed. JUnit 5 @ParameterizedTest, NUnit [TestCase], xUnit [Theory].
 -->
 
 ---
