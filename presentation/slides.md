@@ -73,6 +73,19 @@ Job of the Tech Lead / Architect
 
 
 ---
+layout: two-col-image-text
+image: ./images/meme-2-unit-tests-no-integration.jpg
+---
+
+# UnitTesting?
+
+## It does not cover all bases
+
+<!-- Note that we are only talking about UnitTesting here. Other tests, like integration tests are also needed! -->
+
+
+
+---
 layout: default
 ---
 
@@ -222,7 +235,7 @@ size: md
 
 ::image::
 
-![](./images/meme-100-coverage-257-bugs.jpg)
+![](./images/comic-trivial-test.png)
 
 ::content::
 
@@ -246,27 +259,6 @@ Technical Code: Do you want to test your implementation of ILogger? EntityFramew
 One-time migrations: Do you want tests for a migration that will run only once?
 -->
 
----
-layout: two-col-image-text
-image: ./images/meme-2-unit-tests-no-integration.jpg
----
-
-# 100% Coverage?
-
-## It does not cover all bases
-
-<!-- Note that we are only talking about UnitTesting here. Other tests, like integration tests are also needed! -->
-
----
-layout: two-col-image-text
-image: ./images/comic-trivial-test.png
-h1:
-  type: dot
-  color: muted
-  position: end
----
-
-# 100% Coverage?
 
 ---
 layout: default-aside
