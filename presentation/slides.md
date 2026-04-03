@@ -566,6 +566,7 @@ https://chrisoldwood.blogspot.com/2016/11/tautologies-in-tests.html
 
 ---
 layout: code
+code-size: 1.2em
 h1:
   type: semicolon
   color: muted
@@ -687,15 +688,16 @@ test("calculateTotal_multipleItems_returnsSumOfPrices", () => {
 })
 ```
 
-<div class="mt-4 text-center text-lg">
-  <div v-click.hide="1" class="text-orange-400"><strong>Method_Scenario_Expected</strong> — What are we testing?</div>
-  <div v-click="[1,2]" class="text-emerald-400"><strong>Arrange</strong> — Set up the system under test</div>
-  <div v-click="[2,3]" class="text-cyan-400"><strong>Act</strong> — Execute the behavior</div>
-  <div v-click="[3,4]" class="text-pink-400"><strong>Assert</strong> — Verify the outcome</div>
+<div class="mt-4 text-center text-3xl grid">
+  <div v-click.hide="1" class="text-orange-400 col-start-1 row-start-1"><strong>Method_Scenario_Expected</strong> — What are we testing?</div>
+  <div v-click="[1,2]" class="text-emerald-400 col-start-1 row-start-1"><strong>Arrange</strong> — Set up the system under test</div>
+  <div v-click="[2,3]" class="text-cyan-400 col-start-1 row-start-1"><strong>Act</strong> — Execute the behavior</div>
+  <div v-click="[3,4]" class="text-pink-400 col-start-1 row-start-1"><strong>Assert</strong> — Verify the outcome</div>
 </div>
 
 ---
-layout: default
+layout: code
+code-size: 1em
 ---
 
 # Mocking in Practice
@@ -896,29 +898,6 @@ Seams: Change the behavior of a program without changing the program. Virtual me
 Sensing Variable: Introduce a variable that can be tested against.
 -->
 
----
-layout: default
-h2:
-  type: dot
-  color: muted
-  position: end
----
-
-# Legacy Code
-
-## How to test tricky code
-
-<v-clicks>
-
-- Singleton
-  - Create an internal setter
-  - Optionally create an interface
-- Service Locator
-  - Register stubs to the IOC
-
-</v-clicks>
-
-<!-- Internal setter: InternalsVisibleTo assembly directive. -->
 
 ---
 layout: default
@@ -934,11 +913,65 @@ h1:
 
 <v-clicks>
 
+- Singleton
+  - Create an internal setter
+  - Optionally create an interface
+- Service Locator
+  - Register stubs to the IOC
 - Static Methods
   - Switch to ServiceLocator or Singleton
   - Or even better, switch to DI
 
 </v-clicks>
+
+
+---
+layout: code-comparison
+before-label: Untestable
+after-label: Testable
+---
+
+# Legacy Code
+
+## How to test a Singleton
+
+::before::
+
+```ts {2|6-8|all}
+class Logger {
+  private static instance = new Logger()
+  static getInstance() {
+    return this.instance
+  }
+  log(msg: string) {
+    /* writes to file */
+  }
+}
+```
+
+::after::
+
+<div v-click="2">
+
+```ts {1-8|9-12|all}
+class Logger {
+  private static instance = new Logger()
+  static getInstance() {
+    return this.instance
+  }
+  log(msg: string) {
+    /* writes to file */
+  }
+  // 👇 Add seam for testing
+  static setInstance(logger: Logger) {
+    this.instance = logger
+  }
+}
+```
+
+</div>
+
+<!-- Internal setter: InternalsVisibleTo assembly directive. Also consider extracting an interface for the Singleton. -->
 
 ---
 layout: section
