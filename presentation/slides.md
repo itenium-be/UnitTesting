@@ -77,57 +77,7 @@ layout: default
 
 # The Testing Pyramid
 
-<div class="flex justify-center items-center h-full gap-8 -mt-8">
-  <!-- Left: Speed arrow -->
-  <div class="flex h-96 gap-3 items-center">
-    <div class="flex flex-col h-full py-2 justify-between">
-      <div class="text-7xl -mt-8">🐢</div>
-      <div class="text-7xl">🐇</div>
-    </div>
-    <svg width="24" height="100%" viewBox="0 0 24 380" class="h-96">
-      <line x1="12" y1="18" x2="12" y2="362" stroke="#9ca3af" stroke-width="3"/>
-      <polygon points="12,0 4,18 20,18" fill="#9ca3af"/>
-      <polygon points="12,380 4,362 20,362" fill="#9ca3af"/>
-    </svg>
-  </div>
-
-  <!-- Pyramid (SVG) -->
-  <svg width="480" height="380" viewBox="0 0 480 380">
-    <defs>
-      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="6" result="coloredBlur">
-          <animate attributeName="stdDeviation" values="6;20;6" dur="2s" repeatCount="indefinite"/>
-        </feGaussianBlur>
-        <feMerge>
-          <feMergeNode in="coloredBlur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-    </defs>
-    <!-- E2E - top -->
-    <path d="M240,15 L330,115 L150,115 Z" fill="#10b981"/>
-    <text x="240" y="95" text-anchor="middle" fill="white" font-weight="bold" font-size="7">E2E</text>
-    <!-- Integration - middle -->
-    <path d="M150,115 L330,115 L400,235 L80,235 Z" fill="#06b6d4"/>
-    <text x="240" y="182" text-anchor="middle" fill="white" font-weight="bold" font-size="8">Integration</text>
-    <!-- Unit - bottom (with glow) -->
-    <path d="M80,235 L400,235 L450,355 Q458,375 435,375 L45,375 Q22,375 30,355 Z" fill="#ec4899" filter="url(#glow)"/>
-    <text x="240" y="325" text-anchor="middle" fill="white" font-weight="bold" font-size="9">Unit</text>
-  </svg>
-
-  <!-- Right: Cost arrow -->
-  <div class="flex h-96 gap-3 items-center">
-    <svg width="24" height="100%" viewBox="0 0 24 380" class="h-96">
-      <line x1="12" y1="18" x2="12" y2="362" stroke="#9ca3af" stroke-width="3"/>
-      <polygon points="12,0 4,18 20,18" fill="#9ca3af"/>
-      <polygon points="12,380 4,362 20,362" fill="#9ca3af"/>
-    </svg>
-    <div class="flex flex-col h-full py-2 justify-between">
-      <div class="text-4xl font-bold text-emerald-600 -mt-3">€€€</div>
-      <div class="text-4xl font-bold text-emerald-600">$</div>
-    </div>
-  </div>
-</div>
+<TestingPyramid />
 
 <!--
 The Testing Pyramid (Mike Cohn): Most tests should be unit tests (fast, cheap, isolated). Fewer integration tests (test how components work together). Fewest E2E/UI tests (slow, brittle, expensive to maintain).
@@ -649,10 +599,11 @@ h1:
 
 # Implementation
 
-<v-clicks>
+<v-clicks depth="2">
 
 - Testing & Mocking Framework
   - Typically has SetUp/TearDown hooks
+  - General Fixture vs Fresh Fixture
   - Usually works with Attributes/Decorators
 - Test method naming convention
 - Put the tests close to the code
@@ -660,8 +611,12 @@ h1:
 </v-clicks>
 
 <!--
-Testing Framework: xUnit, JUnit, NUnit. Mocking Framework: Mockito, Moq, NSubstitute.
-Naming Convention: One possibility is MethodName_StateUnderTest/Scenario_ExpectedBehavior. Ex: "IsValidFileName_validFile_returnsTrue"
+**Testing Framework**: xUnit, JUnit, NUnit. Mocking Framework: Mockito, Moq, NSubstitute.
+
+**General Fixture**: Shared setup that creates too much obscuring what the test really needs  
+**Fresh Fixture**: More verbose but clearer and faster.
+
+**Naming Convention**: One possibility is MethodName_StateUnderTest/Scenario_ExpectedBehavior. Ex: "IsValidFileName_validFile_returnsTrue"
 Close to the code: If the UnitTests are "far" away from the code, developers are less inclined to write them. If the tests are right next to the code itself, the dev will be much more likely to add them. But expect strong push-back when you want to introduce this practice.
 -->
 
@@ -708,6 +663,28 @@ There was also "Record-And-Replay" but no one seems to be using that anymore.
 -->
 
 ---
+layout: default
+hide: true
+---
+
+# Test Smells
+
+<v-clicks>
+
+- **Test rot** — Tests pass but no longer verify anything meaningful
+- **Mystery guest** — Hidden dependencies on external data not visible in test
+- **Obscure test** — Hard to understand what's being tested
+- **Eager test** — Testing too many things at once
+- **Sensitive equality** — Asserting entire objects when one field matters
+
+</v-clicks>
+
+<!--
+These are signs your test suite needs maintenance. Often emerge over time as code evolves but tests don't keep pace.
+See: xUnit Test Patterns book by Gerard Meszaros for comprehensive catalog.
+-->
+
+---
 layout: section
 ---
 
@@ -718,8 +695,7 @@ layout: section
 Only test production code
 
 ---
-layout: two-col-image-text
-image: ./images/meme-inception-deeper.jpg
+layout: default-aside
 h2:
   type: braces
   color: muted
@@ -729,6 +705,12 @@ h2:
 # Common Pitfalls
 
 ## Only test production code
+
+<img src="./images/meme-inception-deeper.jpg" class="h-72 mx-auto mt-4" />
+
+::image::
+
+![](./images/circle-pitfalls-chasm.jpg)
 
 <!--
 Do not test things that do not happen. Do not test scenarios that are "illegal" for the business. Do not write branches that are only hit during UnitTesting.
@@ -754,11 +736,16 @@ Example: Testing a "RecordNotFound" results in an Exception but we don't actuall
 -->
 
 ---
-layout: two-col-image-text
-image: ./images/comic-coverage-cheat.png
+layout: default-aside
 ---
 
 # What are you testing?
+
+<img src="./images/comic-coverage-cheat.png" class="h-72 mx-auto mt-4" />
+
+::image::
+
+![](./images/circle-sinkhole.jpg)
 
 ---
 layout: statement
@@ -782,16 +769,16 @@ layout: default-aside
 ---
 
 # Common Pitfalls
+## Failures should be informative
 
-<div class="full-width text-xl text-center mt-16">
 
-Failures should be informative
+<div class="mt-25 text-3xl text-center">
 
-</div>
+Avoid
 
-<div class="mt-12 text-center">
-
-Avoid: `CollectionAssert(bigCollection, otherCollection)`
+```js
+CollectionAssert(bigCollection, otherCollection)
+```
 
 </div>
 
@@ -802,6 +789,33 @@ Avoid: `CollectionAssert(bigCollection, otherCollection)`
 <!--
 If you are comparing 2 (big) collections and the test fails because one collection contains 182 items and the other one 200 items - what does this mean?
 Items 65 in the actual/expected collections differ - what does this mean?
+-->
+
+---
+layout: default
+---
+
+# Flaky Tests
+
+<v-clicks>
+
+- **Time dependencies** — `DateTime.Now`, timeouts, race conditions
+- **Shared state** — Tests polluting each other's data
+- **Parallelism** — Order-dependent tests running concurrently
+- **External systems** — Network, filesystem, databases
+- **Async gaps** — Not awaiting properly, missing synchronization
+
+</v-clicks>
+
+<div v-test class="mt-8 text-orange-400 italic text-center">
+
+A flaky test is worse than no test <br> it erodes trust in the entire suite.
+
+</div>
+
+<!--
+Flaky tests pass sometimes and fail other times without code changes. They're insidious because developers start ignoring test failures ("oh that one's just flaky").
+Fix: Quarantine flaky tests, fix root cause, or delete them. Never just re-run until green.
 -->
 
 ---
