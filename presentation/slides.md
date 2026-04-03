@@ -430,34 +430,6 @@ layout: two-col-image-text
 
 ![](./images/meme-test-doubles.jpg)
 
----
-layout: default-aside
-size: lg
-h1:
-  type: brackets
-  color: muted
-  position: all
----
-
-# State vs Behavior
-
-<v-clicks>
-
-- **State Testing**
-  - Validate that a property has a certain value
-- **Behavior Testing**
-  - Validate that a method was (not) called
-
-</v-clicks>
-
-::image::
-
-![](./images/circle-crown.jpg)
-
-<!--
-State: When updating an entity, the audit fields LastModifiedBy and LastModifiedOn are properly updated. When doing a calculation, assert that the result returned is as expected.
-Behavior: Verify that a method was (not) called, or called with specific arguments. Example: verify that an email is (not) sent, or that Repository.Save() is called.
--->
 
 ---
 layout: default-aside
@@ -468,7 +440,7 @@ h1:
   position: start
 ---
 
-# Mocking
+# Test Doubles
 
 <v-clicks>
 
@@ -521,18 +493,18 @@ layout: comparison
 
 ### Mockist / Solitary
 
-- 🧐 Mock everything
-- ✅ Test complicated BL in isolation
-- ⚠️ May be testing implementation instead of behavior
+🧐 Mock everything
+<br>✅ Test complicated BL in isolation
+<br>⚠️ Danger of creating <b>tautological tests</b>, testing implementation instead of behavior
 
 </div>
 <div class="col">
 
 ### Classicist / Sociable
 
-- 🧐 Mock I/O and/or "awkward" things
-- ✅ Tests survive refactorings more easily
-- ⚠️ Danger of testing the same thing multiple times
+🧐 Mock I/O and/or "awkward" things
+<br>✅ Tests survive refactorings more easily
+<br>⚠️ Danger of testing the same thing multiple times
 
 </div>
 </div>
@@ -543,6 +515,32 @@ Classicist: https://www.thoughtworks.com/insights/blog/mockists-are-dead-long-li
 Also see: https://martinfowler.com/articles/mocksArentStubs.html
 Solitary vs Sociable: https://martinfowler.com/bliki/UnitTest.html
 -->
+
+---
+layout: code
+code-size: 1.1em
+---
+
+# Mockist Testing
+
+## When there is no BL
+
+```cs {1-2|4-5|7-8|all}
+var repo = Substitute.For<IRepository>();
+repo.Get().Returns(["obj1", "obj2"]);
+
+var ctl = new Controller(repo);
+var result = ctl.Get();
+
+Assert.That(result[0], Is.EqualTo("obj1"));
+Assert.That(result[1], Is.EqualTo("obj2"));
+```
+
+<div class="full-width text-3xl text-center mt-8 italic text-orange-400">
+⚠️ What are you truly testing here?
+</div>
+
+
 
 ---
 layout: two-col-image-text
@@ -577,16 +575,55 @@ h1:
 
 ## It just repeats the code
 
-```cs
-var repo = Substitute.For<IRepository>();
-repo.Get().Returns(["obj1", "obj2"]);
-var ctl = new Controller(repo);
+```cs {1|3-4|6|all}
+var service = Substitute.For<IService>();
 
+var ctl = new Controller(service);
 var result = ctl.Get();
 
-Assert.That(result, Is.Not.Null);
-Assert.That(result.Length, Is.EqualTo(2));
+service.Received().Get();
 ```
+
+
+<div class="full-width text-3xl text-center mt-8 italic text-orange-400">
+⚠️ Zero behavior verification <br>
+⚠️ Breaks on any change and/or refactoring
+</div>
+
+
+
+---
+layout: default-aside
+size: lg
+h1:
+  type: brackets
+  color: muted
+  position: all
+---
+
+# State vs Behavior
+
+<v-clicks>
+
+- **State Testing**
+  - Assertion Territory
+  - Validate that a property has a certain value
+- **Behavior Testing**
+  - Mocking Territory
+  - Validate that a method was (not) called
+
+</v-clicks>
+
+::image::
+
+![](./images/circle-crown.jpg)
+
+<!--
+State: When updating an entity, the audit fields LastModifiedBy and LastModifiedOn are properly updated. When doing a calculation, assert that the result returned is as expected.
+Behavior: Verify that a method was (not) called, or called with specific arguments. Example: verify that an email is (not) sent, or that Repository.Save() is called.
+-->
+
+
 
 ---
 layout: section
@@ -669,21 +706,19 @@ There was also "Record-And-Replay" but no one seems to be using that anymore.
 
 ---
 layout: code
+code-size: 1.09em
 ---
 
 # AAA in Practice
 
-```ts {1|2-5|7-8|10-11|all}
+```ts {1|2-4|6-7|8|all}
 test("calculateTotal_multipleItems_returnsSumOfPrices", () => {
-  // Arrange
   const cart = new ShoppingCart()
   cart.add({ name: 'Socks', price: 9.99 })
   cart.add({ name: 'Shoes', price: 79.99 })
 
-  // Act
   const total = cart.calculateTotal()
 
-  // Assert
   expect(total).toBe(89.98)
 })
 ```
@@ -719,6 +754,44 @@ await orderService.placeOrder(order)
 // Assert: verify behavior
 expect(emailService.send).toHaveBeenCalledWith(order.customerEmail)
 ```
+
+---
+layout: code
+code-size: 0.95em
+h1:
+  type: brackets
+  color: muted
+  position: 2
+---
+
+# Parameterized Tests
+
+```ts {1-6|8-14|all}
+// ✅ Use parameterized: same logic, different inputs
+test.each([
+  { input: -1, expected: false },
+  { input: 0,  expected: false },
+  { input: 2,  expected: true },
+  { input: 97, expected: true },
+])("isPrime($input) returns $expected", ({ input, expected }) => {
+  expect(isPrime(input)).toBe(expected)
+})
+
+// ❌ Don't parameterize: different scenarios, different intent
+// "user with expired token" vs "user with no token"
+//  → separate tests with descriptive names
+```
+
+<div class="mt-4 text-center text-2xl grid">
+  <div v-click.hide="1" class="text-emerald-400 col-start-1 row-start-1">Boundaries &amp; equivalence classes → <strong>parameterize</strong></div>
+  <div v-click="[1,2]" class="text-orange-400 col-start-1 row-start-1">Different scenarios or business rules → <strong>separate tests</strong></div>
+</div>
+
+<!--
+Parameterized tests shine for boundary value analysis and equivalence partitioning — exactly the cases we discussed earlier.
+But they obscure intent when scenarios are conceptually different. When a parameterized test fails, the failure message is often just "row 3 failed" — you lose the descriptive test name that tells you WHAT broke.
+Rule of thumb: if you can describe all cases with "same function, different numbers" → parameterize. If each case has a different story → separate tests.
+-->
 
 ---
 layout: default
