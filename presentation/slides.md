@@ -48,6 +48,7 @@ layout: quote-image
 
 ---
 layout: quote-image
+hide: true
 ---
 
 # Inspirational Quote
