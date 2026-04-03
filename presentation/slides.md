@@ -1076,6 +1076,33 @@ Seams: Change the behavior of a program without changing the program. Virtual me
 Sensing Variable: Introduce a variable that can be tested against.
 -->
 
+---
+layout: default
+---
+
+# Legacy Code
+
+## Techniques from Feathers
+
+<v-clicks>
+
+- **Characterization Tests** — Document current behavior with tests before refactoring
+- **Sprout Method/Class** — Add new code in testable units and call it from legacy
+- **Extract and Override** — Make method virtual, override in test subclass
+
+</v-clicks>
+
+<div v-click class="mt-8 text-center italic text-gray-500">
+
+Working Effectively with Legacy Code — Michael Feathers
+
+</div>
+
+<!--
+Characterization Tests: Don't test what it SHOULD do, test what it DOES. Capture current behavior as a safety net before making changes.
+Sprout Method: When you need to add a feature, write it in a new testable method and call it from the legacy code.
+Extract and Override: Extract code to a protected virtual method, then subclass in tests to override behavior.
+-->
 
 ---
 layout: default
@@ -1272,12 +1299,16 @@ h1:
 </div>
 
 ---
-layout: quote
+layout: default-aside
 ---
 
 # And Remember...
 
-![](./images/meme-code-is-dark.jpg)
+<img src="./images/meme-code-is-dark.jpg" class="h-72 mx-auto mt-4" />
+
+::image::
+
+![](./images/circle-bugs-insects.jpg)
 
 <!-- No matter how much testing is done on each level of the testing pyramid, no system is entirely bug free. -->
 
