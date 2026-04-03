@@ -359,6 +359,48 @@ Edge Case Testing: Add tests for NULL, PositiveInfinity, NaN, ...
 -->
 
 ---
+layout: code-comparison
+before-label: Equivalence Partitioning
+after-label: Edge Cases
+code-size: 0.85em
+---
+
+# Boundaries
+
+## isValidPercentage(n)
+
+::before::
+
+```ts {1-2|4-6|0}
+// All negative values belong to the same partition
+test("rejects negative", () => expect(valid(-20)).toBe(false))
+
+// The percentage validation function has 2 more partitions
+test("accepts valid", () => expect(valid(20)).toBe(true))
+test("rejects over 100", () => expect(valid(200)).toBe(false))
+```
+
+
+### Boundary Value Analysis
+
+
+```ts {0|1-2|3-4|0}
+test("low boundary",  () => expect(valid(-1)).toBe(false))
+test("low boundary",   () => expect(valid(0)).toBe(true))
+test("high boundary", () => expect(valid(100)).toBe(true))
+test("high boundary", () => expect(valid(101)).toBe(false))
+```
+
+::after::
+
+```ts {0|all}
+test("null",      () => expect(valid(null)).toBe(false))
+test("NaN",       () => expect(valid(NaN)).toBe(false))
+test("Infinity",  () => expect(valid(Infinity)).toBe(false))
+test("string",    () => expect(valid("50")).toBe(false))
+```
+
+---
 layout: section
 ---
 
@@ -603,11 +645,12 @@ h1:
 
 # State vs Behavior
 
-<v-clicks>
+<v-clicks depth="2">
 
 - **State Testing**
   - Assertion Territory
   - Validate that a property has a certain value
+  - ✅ Most tests should do state testing
 - **Behavior Testing**
   - Mocking Territory
   - Validate that a method was (not) called
@@ -623,7 +666,41 @@ State: When updating an entity, the audit fields LastModifiedBy and LastModified
 Behavior: Verify that a method was (not) called, or called with specific arguments. Example: verify that an email is (not) sent, or that Repository.Save() is called.
 -->
 
+---
+layout: code-comparison
+before-label: State Testing
+after-label: Behavior Testing
+code-size: 0.93em
+---
 
+# State vs Behavior
+
+::before::
+
+```ts {2-5|7|all}
+test("setsStatusToCompleted", () => {
+  const emailService = mock<EmailService>()
+  const order = new Order(emailService)
+
+  order.place()
+
+  expect(order.status).toBe("completed")
+})
+```
+
+::after::
+
+```ts {0|7-8|all}
+test("sendsConfirmationEmail", () => {
+  const emailService = mock<EmailService>()
+  const order = new Order(emailService)
+
+  order.place()
+
+  expect(emailService.send)
+    .toHaveBeenCalledWith(order.email)
+})
+```
 
 ---
 layout: section
