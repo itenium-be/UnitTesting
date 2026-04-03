@@ -565,7 +565,11 @@ https://chrisoldwood.blogspot.com/2016/11/tautologies-in-tests.html
 -->
 
 ---
-layout: default
+layout: code
+h1:
+  type: semicolon
+  color: muted
+  position: end
 ---
 
 # Tautological Test
@@ -663,6 +667,58 @@ There was also "Record-And-Replay" but no one seems to be using that anymore.
 -->
 
 ---
+layout: code
+---
+
+# AAA in Practice
+
+```ts {1|2-5|7-8|10-11|all}
+test("calculateTotal_multipleItems_returnsSumOfPrices", () => {
+  // Arrange
+  const cart = new ShoppingCart()
+  cart.add({ name: 'Socks', price: 9.99 })
+  cart.add({ name: 'Shoes', price: 79.99 })
+
+  // Act
+  const total = cart.calculateTotal()
+
+  // Assert
+  expect(total).toBe(89.98)
+})
+```
+
+<div class="mt-4 text-center text-lg">
+  <div v-click.hide="1" class="text-orange-400"><strong>Method_Scenario_Expected</strong> — What are we testing?</div>
+  <div v-click="[1,2]" class="text-emerald-400"><strong>Arrange</strong> — Set up the system under test</div>
+  <div v-click="[2,3]" class="text-cyan-400"><strong>Act</strong> — Execute the behavior</div>
+  <div v-click="[3,4]" class="text-pink-400"><strong>Assert</strong> — Verify the outcome</div>
+</div>
+
+---
+layout: default
+---
+
+# Mocking in Practice
+
+```ts {1-3|5-9|11-12|14-15|all}
+// Arrange: create mock
+const emailService = mock<EmailService>()
+emailService.send.mockResolvedValue({ success: true })
+
+// Arrange: inject mock
+const orderService = new OrderService({
+  emailService,
+  // ... other deps
+})
+
+// Act
+await orderService.placeOrder(order)
+
+// Assert: verify behavior
+expect(emailService.send).toHaveBeenCalledWith(order.customerEmail)
+```
+
+---
 layout: default
 hide: true
 ---
@@ -675,7 +731,6 @@ hide: true
 - **Mystery guest** — Hidden dependencies on external data not visible in test
 - **Obscure test** — Hard to understand what's being tested
 - **Eager test** — Testing too many things at once
-- **Sensitive equality** — Asserting entire objects when one field matters
 
 </v-clicks>
 
