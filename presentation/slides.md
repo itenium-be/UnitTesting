@@ -137,7 +137,7 @@ layout: section
 # Why
 
 ---
-layout: default
+layout: default-aside
 h1:
   type: semicolon
   color: muted
@@ -157,6 +157,10 @@ h1:
 - Pay Now vs Pay More Later
 
 </v-clicks>
+
+::image::
+
+![](./images/why.png)
 
 <!--
 Small continuous steps forward: When the going gets so tough that you are not making progress at all. One of the advantages of working in a TDD style.
