@@ -1262,7 +1262,7 @@ Write tests until fear is transformed into boredom.
 -->
 
 ---
-layout: two-col-image-text
+layout: default
 h1:
   type: braces
   color: primary
@@ -1271,15 +1271,8 @@ h1:
 
 # Resources
 
-::image::
-
-<div class="flex flex-col items-center gap-1 h-full justify-center pl-4">
-  <img src="./images/book-art-of-unit-testing.jpg" class="max-h-[30%] w-auto rounded shadow" />
-  <img src="./images/book-legacy-code.jpg" class="max-h-[30%] w-auto rounded shadow" />
-  <img src="./images/book-tdd-by-example.jpg" class="max-h-[30%] w-auto rounded shadow" />
-</div>
-
-::content::
+<div class="flex gap-8 mt-4">
+<div class="flex-1">
 
 **Books:**
 
@@ -1296,6 +1289,14 @@ h1:
 
 - Fowler: Mocks Aren't Stubs
 
+</div>
+
+</div>
+<div class="flex flex-col items-end gap-2 justify-center">
+  <img src="./images/book-art-of-unit-testing.jpg" class="h-32 w-auto rounded shadow" />
+  <img src="./images/book-legacy-code.jpg" class="h-32 w-auto rounded shadow" />
+  <img src="./images/book-tdd-by-example.jpg" class="h-32 w-auto rounded shadow" />
+</div>
 </div>
 
 ---
