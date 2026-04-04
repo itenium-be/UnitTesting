@@ -1042,7 +1042,7 @@ layout: default
 
 </v-clicks>
 
-<div v-test class="mt-8 text-orange-400 italic text-center">
+<div v-click class="mt-8 text-orange-400 italic text-center">
 
 A flaky test is worse than no test <br> it erodes trust in the entire suite.
 
