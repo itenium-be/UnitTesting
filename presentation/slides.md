@@ -23,7 +23,7 @@ h1:
 
 ---
 layout: agenda
-size: sm
+textSize: sm
 items:
   - Role Team Leads & Architects
   - Why?
@@ -232,7 +232,7 @@ layout: section
 
 ---
 layout: two-col-image-text
-size: md
+textSize: md
 ---
 
 # 100% Coverage?
@@ -504,7 +504,7 @@ layout: two-col-image-text
 
 ---
 layout: default-aside
-size: lg
+textSize: lg
 h1:
   type: semicolon
   color: muted
@@ -665,7 +665,7 @@ service.Received().Get();
 
 ---
 layout: default-aside
-size: lg
+textSize: lg
 h1:
   type: brackets
   color: muted
