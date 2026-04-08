@@ -2,6 +2,7 @@ name: Export PPTX
 on:
   push:
     branches: [main, master]
+  workflow_dispatch:
 jobs:
   export:
     uses: itenium-be/Presentations/.github/workflows/export-pptx.yml@master
