@@ -1,11 +1,13 @@
 ---
 theme: ./theme
 title: UnitTesting
+subTitle: "Everything UnitTesting"
 transition: fade
 session-time: 70min
 track: Architecture
 type: Theoretical
 first: 2022-08-25
+lastUpdate: 2026-04-05
 h1:
   type: slashes
   color: muted
