@@ -6,3 +6,5 @@ on:
 jobs:
   export:
     uses: itenium-be/Presentations/.github/workflows/export-pptx.yml@master
+    permissions:
+      contents: write
