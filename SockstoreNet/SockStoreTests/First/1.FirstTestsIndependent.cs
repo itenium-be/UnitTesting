@@ -22,7 +22,7 @@ public class FirstTestsIndependent
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
     {
-        _msSqlContainer = new MsSqlBuilder()
+        _msSqlContainer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest")
             .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
             .WithPassword("Strong_Password_123!")
             .Build();

@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../README.md" />
+    <File Path="SOLUTIONS.md" />
+  </Folder>
+  <Project Path="Application/Application.csproj" />
+  <Project Path="Infrastructure/Infrastructure.csproj" />
+  <Project Path="Migration.Console/Migration.Console.csproj" />
+  <Project Path="Migration/Migration.csproj" />
+  <Project Path="SockStoreApi/SockStoreApi.csproj" />
+  <Project Path="SockStoreTests/SockStoreTests.csproj" />
+  <Project Path="Vocabulary/Vocabulary.csproj" />
+</Solution>

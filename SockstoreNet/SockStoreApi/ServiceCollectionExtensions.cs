@@ -30,15 +30,9 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddSwagger(this IServiceCollection services)
+    public static IServiceCollection AddOpenApiDocs(this IServiceCollection services)
     {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(options =>
-        {
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "SockstoreApi.xml"));
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Application.xml"));
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "Vocabulary.xml"));
-        });
+        services.AddOpenApi();
         return services;
     }
 }
