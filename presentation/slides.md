@@ -8,6 +8,7 @@ track: Architecture
 type: Theoretical
 first: 2022-08-25
 lastUpdate: 2026-04-05
+aspectRatio: 16/10
 h1:
   type: slashes
   color: muted
